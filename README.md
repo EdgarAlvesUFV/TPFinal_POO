@@ -2,6 +2,7 @@
 ## Autores
 - [Alice Ladeira Gonçalves - 5065](https://www.github.com/aliceLadeira)
 - [Edgar Alves de Jesus - 5087](https://www.github.com/EdgarAlvesUFV)
+- [Iago Guimarães Falcão - 5795](https://www.github.com/kozukiIaguin)
 
 ## <center>AgiotApp</center>
 
