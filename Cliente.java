@@ -72,49 +72,89 @@
 //     public void removerParente(String nome){
 //         this.parentes.removeIf(parente -> parente.getNome().equals(nome))
 //     }
-//     @Override
+   
 //     public String getTipoConta(){ 
 //         return conta.getTipoConta();
 //     }
-//     @Override
+    
 //     public void verExtrato(){
 //         System.out.println("Extrato do cliente : "+ getNome() + ": Saldo = " + conta.getSaldo());
 //     }
-//     @Override
+
 //     public void simularEmprestimo(int quantia){//quantia para emprestimo desejado
-//         //simular novo saldo
 //         //consultar juros de cada agiota??
+//         double taxaJurosAnual = 10.0;//taxa de juros//depois adicionar um para cada agiota
+//         int prazoMes = 12;//mesma coisa, pegar de cada agiota um prazo
+//         double jurosMensais = taxaJurosAnual/12;
+//         double parcela = ((quantia*taxaJurosAnual)/12);
+//         double valorTotal = parcela*prazoMes;
+
+//         System.out.println("Simulação de empréstimo:");
+//         System.out.println("Quantia: R$ " + quantia);
+//         System.out.println("Parcelas: " + prazoMes);
+//         System.out.println("Valor mensal: R$ " + parcela);
+//         System.out.println("Total a pagar: R$ " + valorTotal);
 
 //     }
-//     @Override
-//     public void realizarEmprestimo(){
+    
+//     public void realizarEmprestimo(int quantia, double taxaJuros){
 //         //consultar lista de agiotas disponiveis
-//         //mostrar informacoes gerais (saldo, juros, tempo etc)
+//         ArrayList<Agiota> listaAgiotas;
+//         System.out.println("Lista de agiotas disponiveis para o emprestimo: ");
+//         for (Agiota agiota : listaAgiotas) {
+//             double jurosMensais = agiota.getTaxaJurosMensal();
+//             int prazoMes = agiota.getPrazoMes();
+//             double parcela = (quantia * (jurosMensais / 100));
+//             double valorTotal = parcela * prazoMes;
+
+//             System.out.println("Agiota: " + agiota.getNome());
+//             System.out.println("Taxa de Juros Mensal: " + jurosMensais + "%");
+//             System.out.println("Prazo: " + prazoMes + " meses");
+//             System.out.println("Valor Mensal: R$ " + parcela);
+//             System.out.println("Total a pagar: R$ " + valorTotal);
+//             System.out.println("-------------------------------");
+//         }
 //         //atualizar extrato
 //         //atualizar fatura
 //         //inicializar temporizador de pagamento
 //         //notificar agiota ao longo do tempo e quando for realizado o emprestimo
 //     }
-//     @Override
 //     public String historicoEmprestimos(){
 //         //exibir lista de emprestimos
+//         StringBuilder historico = new StringBuilder();
+//         for(String cobranca : listaCobranca){
+//             historico.append(cobranca).append("\n");
+//         }
+//         return historico.toString();
 //         //disponibilidade de ver dados dos emprestimos(cobrancas, datas, atrasos, valores e avaliacoes)
 //     }
-//     @Override
+  
 //     public String pagarParcela(int idParcela){
 //         //diminuir saldo do valor
+//         Fatura fatura = faturas.get(idParcela); // Busca a fatura pelo ID
+//         double valorParcela = fatura.getValorParcela();
+//         if (conta.getSaldo() >= valorParcela) {//metodos conta e fatura, olhar
+//             conta.sacar(valorParcela);
+//             fatura.diminuirSaldo(valorParcela);
+//             return "Parcela paga com sucesso. Valor: R$ " + valorParcela;
+//         } else {
+//             return "Saldo insuficiente para pagar a parcela. Notificando agiota.";
+//         }
 //         //caso sem limite notificar agiota do saldo
 //         //notificar possivel penalidade caso sem limite
 //         //diminuir o valor do pagamento da parcela na fatura
 //         //diminuir da fatura
 //     }
-//     @Override
+
 //     public void avaliarAgiota(int idConta){
 //         //quantidade de estrelas
 //         //adicionar comentario
-//         //pegar o texto do comentario araves do botao
+//         //salvar no txt a avaliacao
+//         Avaliacao avaliacao = new Avaliacao(idConta, estrelas, comentario);
+//         avaliacoes.add(avaliacao);
+//         System.out.println("Agiota avaliado com " + estrelas + " estrelas. Comentário: " + comentario);
 //     }
-//     @Override
+
 //     public String verHistoricoCobranca(){
 //         //exibir lista de cobrancas realizadas pelo agiota
 //         //exibir consequencias das conbrancas se houver
