@@ -154,8 +154,8 @@ public class Cliente extends Pessoa implements Conta {
 
     public String historicoEmprestimos() {
         StringBuilder historico = new StringBuilder();
-        for (String cobranca : listaCobranca) {
-            historico.append(cobranca).append("\n");
+        for (Fatura fatura : this.faturas) {
+            historico.append("Id Agiota: " + fatura.getIdContaAgiota() + "Valor: " + fatura.getValorTotal()).append("\n");
         }
         return historico.toString();
     }
@@ -180,10 +180,16 @@ public class Cliente extends Pessoa implements Conta {
         }
     }
 
-    public void avaliarAgiota(int idConta, int estrelas, String comentario) {
-        Avaliacao avaliacao = new Avaliacao(comentario, estrelas, idConta);
+    @Override
+    public void receberAvaliacao(int estrelas, String comentario) {
+        Avaliacao avaliacao = new Avaliacao(comentario, estrelas, this.idCliente);
         avaliacoes.add(avaliacao);
-        System.out.println("Agiota avaliado com " + estrelas + " estrelas. Comentário: " + comentario);
+        System.out.println("Cliente avaliado com " + estrelas + " estrelas. Comentário: " + comentario);
+    }
+
+    public void adicionarCobranca(String cobranca) {
+        this.listaCobranca.add(cobranca);
+        System.out.println("Cobrança enviada");
     }
 
     public String verHistoricoCobranca() {

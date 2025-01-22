@@ -18,7 +18,7 @@ public class Parcela {
         this.idParcela = idParcela;
         this.valor = valor;
         this.dataVencimento = dataVencimento;
-        this.dataPagamento = dataPagamento; // Inicialmente não paga
+        this.dataPagamento = dataPagamento; 
     }
 
     //getters e setters

@@ -179,11 +179,18 @@ public class Agiota implements Conta {
         return sb.toString();
     }
 
-    public void avaliarCliente(int idConta) {
-        //falta implementar
+    @Override
+    public void receberAvaliacao(int estrelas, String comentario) {
+        Avaliacao avaliacao = new Avaliacao(comentario, estrelas, this.idAgiota);
+        avaliacoes.add(avaliacao);
+        System.out.println("Agiota avaliado com " + estrelas + " estrelas. Comentário: " + comentario);
     }
 
     public void relatarCobranca(int idConta, String mensagem) {
-        //falta implementar
+        for (Cliente cliente : listaClientes) {
+            if (cliente.getIdCliente() == idConta) {
+                cliente.adicionarCobranca(mensagem);
+            }
+        }
     }
 }
