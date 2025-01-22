@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Agiota implements Conta {
+    private int idAgiota;
     private String cpf;
     private String nome;
     private String senha;
@@ -11,12 +12,13 @@ public class Agiota implements Conta {
     private double juros;
     private boolean aceitaParcelado;
     private int maximoParcelas;
-    private List<Double> listaAvaliacoes;
+    private List<Avaliacao> avaliacoes;
     private double notaTotal;
 
     //construtor
-    public Agiota(String cpf, String nome, String senha, String descricao, double saldo, double juros,
-                  boolean aceitaParcelado, int maximoParcelas) {
+    public Agiota(int idAgiota, String cpf, String nome, String senha, String descricao, double saldo, double juros,
+                   boolean aceitaParcelado, int maximoParcelas, double notaTotal) {
+        this.idAgiota = idAgiota;
         this.cpf = cpf;
         this.nome = nome;
         this.senha = senha;
@@ -26,11 +28,51 @@ public class Agiota implements Conta {
         this.aceitaParcelado = aceitaParcelado;
         this.maximoParcelas = maximoParcelas;
         this.listaClientes = new ArrayList<>();
-        this.listaAvaliacoes = new ArrayList<>();
+        this.avaliacoes = new ArrayList<>();
+        this.notaTotal = notaTotal;
+    }
+
+    public Agiota(int idAgiota, String cpf, String nome, String senha, String descricao, double saldo, double juros,
+                   boolean aceitaParcelado, int maximoParcelas) {
+        this.idAgiota = idAgiota;
+        this.cpf = cpf;
+        this.nome = nome;
+        this.senha = senha;
+        this.descricao = descricao;
+        this.saldo = saldo;
+        this.juros = juros;
+        this.aceitaParcelado = aceitaParcelado;
+        this.maximoParcelas = maximoParcelas;
+        this.listaClientes = new ArrayList<>();
+        this.avaliacoes = new ArrayList<>();
+        this.notaTotal = 0.0;
+    }
+
+    public Agiota(int idAgiota, String cpf, String nome, String senha, String descricao, double saldo, double juros) {
+        this.idAgiota = idAgiota;
+        this.cpf = cpf;
+        this.nome = nome;
+        this.senha = senha;
+        this.descricao = descricao;
+        this.saldo = saldo;
+        this.juros = juros;
+        this.aceitaParcelado = false;
+        this.maximoParcelas = 0;
+        this.listaClientes = new ArrayList<>();
+        this.avaliacoes = new ArrayList<>();
         this.notaTotal = 0.0;
     }
 
     //getters e setters
+
+    public int getIdAgiota() {
+        return idAgiota;
+    }
+
+    public void setIdAgiota(int idAgiota) {
+        this.idAgiota = idAgiota;
+    }
+
     public String getCpf() { 
         return cpf; 
         }
@@ -103,12 +145,12 @@ public class Agiota implements Conta {
         this.maximoParcelas = maximoParcelas; 
         }
     
-    public List<Double> getListaAvaliacoes() { 
-        return listaAvaliacoes; 
+    public List<Avaliacao> getListaAvaliacoes() {
+        return avaliacoes;
         }
 
-    public void setListaAvaliacoes(List<Double> listaAvaliacoes) { 
-        this.listaAvaliacoes = listaAvaliacoes; 
+    public void setListaAvaliacoes(List<Avaliacao> listaAvaliacoes) { 
+        this.avaliacoes = listaAvaliacoes; 
         }
     
     public double getNotaTotal() { 
@@ -124,8 +166,9 @@ public class Agiota implements Conta {
         return "Agiota";
     }
 
-    public String verExtrato() {
-        return "Extrato de " + nome + " - Saldo: " + saldo;
+    @Override
+    public void verExtrato() {
+        System.out.println("Extrato do cliente: " + getNome() + ": Saldo = R$ " + saldo);
     }
 
     public String listarClientes() {

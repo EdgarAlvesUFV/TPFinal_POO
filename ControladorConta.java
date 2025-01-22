@@ -1,67 +1,101 @@
-package edu.edgar;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class ControladorConta {
-    private BancoDeDados bancoDeDados;
+    public BancoDeDados bancoDeDados;
 
     public ControladorConta(){
         this.bancoDeDados = new BancoDeDados();
         this.bancoDeDados.carregarContas();
     }
 
-    public void login(){
-        redirecionarSistema(bancoDeDados.login());
+    public void login(Scanner scanner){
+        redirecionarSistema(bancoDeDados.login(scanner), scanner);
     }
 
-    private void redirecionarSistema(Conta conta) {
+    private void redirecionarSistema(Conta conta, Scanner scanner) {
         if (conta == null) {
             System.out.println("Tentativas máxima de login realizadas, tente novamente mais tarde!");
         }
         else if ("Cliente".equals(conta.getTipoConta())) {
-            clienteMenu((Cliente) conta);
+            clienteMenu((Cliente) conta, scanner);
         } else if ("Agiota".equals(conta.getTipoConta())) {
-            agiotaMenu((Agiota) conta);
+            agiotaMenu((Agiota) conta, scanner);
         }
     }
 
-    private void clienteMenu(Cliente cliente) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("MenuCliente");
-        System.out.println("Selecione uma das opções abaixo:");
-        System.out.println("1 - Editar perfil\n2 - Ver extrato\n3 - Simular empréstimo\n4 - Histórico de empréstimos");
-        System.out.println("5 - Pagar parcela\n6 - Ver histórico de cobranças");
-        int opcao = scanner.nextInt();
-        scanner.nextLine();
-        switch (opcao) {
-            case 1:
-                
-                break;
-            case 2:
-                
-                break;
-            case 3:
-                
-                break;
-            case 4:
-                
-                break;
-            case 5:
-                
-                break;
-            case 6:
-                
-                break;
-            default:
-                break;
-        }
+    private void clienteMenu(Cliente cliente, Scanner scanner) {
+        int opcao;
+        do {
+            System.out.println("\nMenu do Cliente:");
+            System.out.println("1 - Editar perfil");
+            System.out.println("2 - Ver extrato");
+            System.out.println("3 - Simular empréstimo");
+            System.out.println("4 - Histórico de empréstimos");
+            System.out.println("5 - Pagar parcela");
+            System.out.println("6 - Ver histórico de cobranças");
+            System.out.println("0 - Sair");
+            System.out.print("Escolha uma opção: ");
+            opcao = scanner.nextInt();
+            scanner.nextLine(); 
 
-        scanner.close();
+            switch (opcao) {
+                case 1:
+                    System.out.print("Digite o novo endereço: ");
+                    String novoEndereco = scanner.nextLine();
+                    System.out.print("Digite o novo telefone: ");
+                    String novoTelefone = scanner.nextLine();
+                    cliente.setEndereco(novoEndereco);
+                    cliente.setTelefone(novoTelefone);
+                    System.out.println("Perfil atualizado com sucesso!");
+                    bancoDeDados.salvarContas();
+                    break;
+
+                case 2:
+                    cliente.verExtrato();
+                    break;
+
+                case 3:
+                    System.out.print("Digite o valor do empréstimo: ");
+                    int valorEmprestimo = scanner.nextInt();
+                    System.out.print("Digite a taxa de juros anual (%): ");
+                    double taxaJuros = scanner.nextDouble();
+                    System.out.print("Digite o prazo em meses: ");
+                    int prazo = scanner.nextInt();
+                    cliente.simularEmprestimo(valorEmprestimo, taxaJuros, prazo);
+                    break;
+
+                case 4:
+                    System.out.println("Histórico de Empréstimos:");
+                    System.out.println(cliente.historicoEmprestimos());
+                    break;
+
+                case 5:
+                    System.out.print("Digite o ID da fatura: ");
+                    int idFatura = scanner.nextInt();
+                    System.out.print("Digite o ID da parcela: ");
+                    int idParcela = scanner.nextInt();
+                    String resultadoPagamento = cliente.pagarParcela(idFatura, idParcela);
+                    System.out.println(resultadoPagamento);
+                    break;
+
+                case 6:
+                    System.out.println("Histórico de Cobranças:");
+                    System.out.println(cliente.verHistoricoCobranca());
+                    break;
+
+                case 0:
+                    System.out.println("Saindo do sistema...");
+                    break;
+
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+        } while (opcao != 0);
     }
 
-    private void agiotaMenu(Agiota agiota) {
+    private void agiotaMenu(Agiota agiota, Scanner scanner) {
         // Exibir opções do agiota
         System.out.println("Agiota Logou");
     }
@@ -82,12 +116,10 @@ public class ControladorConta {
         return false;
     }
 
-    private void cadastrarCliente(){
-        Scanner scanner = new Scanner(System.in);
+    private void cadastrarCliente(Scanner scanner){
         System.out.println("Digite seu CPF: ");
         String cpf = scanner.nextLine();
         if(verificarCadastro(cpf)){
-            scanner.close();
             return;
         };
         System.out.println("Digite uma senha: ");
@@ -98,7 +130,7 @@ public class ControladorConta {
         String endereco = scanner.nextLine();
         System.out.println("Digite seu telefone: ");
         String telefone = scanner.nextLine();
-        Cliente cliente = new Cliente(cpf, nome, senha, endereco, telefone);
+        Cliente cliente = new Cliente(bancoDeDados.getProximoId(), cpf, nome, senha, endereco, telefone);
         System.out.println("Deseja adicionar um parente:\n1 - Sim\n2 - Não ");
         int opcao = scanner.nextInt();
         scanner.nextLine();
@@ -124,20 +156,17 @@ public class ControladorConta {
                     break;
                 }
             }
-            cliente.setListaParentes(listaParentes);
+            cliente.setParentes(listaParentes);
         }
         bancoDeDados.adicionarCliente(cliente);
         bancoDeDados.salvarContas();
-        scanner.close();
-        clienteMenu(cliente);
+        clienteMenu(cliente, scanner);
     }
 
-    private void cadastrarAgiota(){
-        Scanner scanner = new Scanner(System.in);
+    private void cadastrarAgiota(Scanner scanner){
         System.out.println("Digite seu CPF: ");
         String cpf = scanner.nextLine();
         if(verificarCadastro(cpf)){
-            scanner.close();
             return;
         };
         System.out.println("Digite uma senha: ");
@@ -163,23 +192,22 @@ public class ControladorConta {
             System.out.println("Digite o número máximo de parcelas: ");
             maximoParcelas = scanner.nextInt();
             scanner.nextLine();
-            agiota = new Agiota(cpf, nome, senha, descricao, saldo, juros, aceitaParcelado, maximoParcelas);
+            agiota = new Agiota(bancoDeDados.getProximoId(), cpf, nome, senha, descricao, saldo, juros, aceitaParcelado, maximoParcelas);
         }
         else{
             //Criar construtor sem aceitaparcelado e maximo parcelas
-            agiota = new Agiota(cpf, nome, senha, descricao, saldo, juros);
+            agiota = new Agiota(bancoDeDados.getProximoId(), cpf, nome, senha, descricao, saldo, juros);
         }
         bancoDeDados.adicionarAgiota(agiota);
         bancoDeDados.salvarContas();
-        scanner.close();
-        agiotaMenu(agiota);
+        agiotaMenu(agiota, scanner);
     }
 
-    public void menuCadastro(String opcaoCadastro){
+    public void menuCadastro(String opcaoCadastro, Scanner scanner){
         if (opcaoCadastro.equals("Cliente") ) {
-            cadastrarCliente();
+            cadastrarCliente(scanner);
         } else if (opcaoCadastro.equals("Agiota") ) {
-            cadastrarAgiota();
+            cadastrarAgiota(scanner);
         }
     }
 }

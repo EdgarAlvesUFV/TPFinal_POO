@@ -1,26 +1,46 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Cliente extends Pessoa implements Conta {
+    private int idCliente;
     private String cpf;
     private String senha;
-    private ArrayList<Parente> parentes; // lista parentes
-    private ArrayList<Avaliacao> avaliacoes; // lista de avaliações
-    private ArrayList<Fatura> faturas; // lista de faturas
+    private List<Parente> parentes; // lista parentes
+    private List<Avaliacao> avaliacoes; // lista de avaliações
+    private List<Fatura> faturas; // lista de faturas
     private double notaTotal;
-    private ArrayList<String> listaCobranca;
+    private List<String> listaCobranca;
     private double saldo;
 
-    public Cliente(String nome, String endereco, String telefone, String cpf, String senha, ArrayList<Parente> parentes,
-                   ArrayList<Avaliacao> avaliacoes, ArrayList<Fatura> faturas, double notaTotal, ArrayList<String> listaCobranca, double saldo) {
+    public Cliente(int id, String cpf, String nome, String endereco, String telefone, String senha, 
+                   double saldo, double notaTotal) {
         super(nome, endereco, telefone);
+        this.idCliente = id;
         this.cpf = cpf;
         this.senha = senha;
-        this.parentes = parentes;
-        this.avaliacoes = avaliacoes;
-        this.faturas = faturas;
+        this.parentes = new ArrayList<>();
+        this.avaliacoes = new ArrayList<>();;
+        this.faturas = new ArrayList<>();;
         this.notaTotal = notaTotal;
-        this.listaCobranca = listaCobranca;
+        this.listaCobranca = new ArrayList<>();;
         this.saldo = saldo;
+    }
+
+    public Cliente(int id, String cpf, String nome, String senha, String endereco, String telefone) {
+        super(nome, endereco, telefone);
+        this.idCliente = id;
+        this.cpf = cpf;
+        this.senha = senha;
+        this.parentes = new ArrayList<>();
+        this.avaliacoes = new ArrayList<>();;
+        this.faturas = new ArrayList<>();;
+        this.notaTotal = 0.0;
+        this.listaCobranca = new ArrayList<>();;
+        this.saldo = 0.0;
+    }
+
+    public int getIdCliente() {
+        return idCliente;
     }
 
     public String getCpf() {
@@ -39,27 +59,27 @@ public class Cliente extends Pessoa implements Conta {
         this.senha = senha;
     }
 
-    public ArrayList<Parente> getParentes() {
+    public List<Parente> getListaParentes() {
         return parentes;
     }
 
-    public void setParentes(ArrayList<Parente> parentes) {
+    public void setParentes(List<Parente> parentes) {
         this.parentes = parentes;
     }
 
-    public ArrayList<Avaliacao> getAvaliacoes() {
+    public List<Avaliacao> getListaAvaliacoes() {
         return avaliacoes;
     }
 
-    public void setAvaliacoes(ArrayList<Avaliacao> avaliacoes) {
+    public void setAvaliacoes(List<Avaliacao> avaliacoes) {
         this.avaliacoes = avaliacoes;
     }
 
-    public ArrayList<Fatura> getFaturas() {
+    public List<Fatura> getListaFaturas() {
         return faturas;
     }
 
-    public void setFaturas(ArrayList<Fatura> faturas) {
+    public void setFaturas(List<Fatura> faturas) {
         this.faturas = faturas;
     }
 
@@ -71,11 +91,11 @@ public class Cliente extends Pessoa implements Conta {
         this.notaTotal = notaTotal;
     }
 
-    public ArrayList<String> getListaCobranca() {
+    public List<String> getHistoricoCobranca() {
         return listaCobranca;
     }
 
-    public void setListaCobranca(ArrayList<String> listaCobranca) {
+    public void setListaCobranca(List<String> listaCobranca) {
         this.listaCobranca = listaCobranca;
     }
 
@@ -161,7 +181,7 @@ public class Cliente extends Pessoa implements Conta {
     }
 
     public void avaliarAgiota(int idConta, int estrelas, String comentario) {
-        Avaliacao avaliacao = new Avaliacao(idConta, estrelas, comentario);
+        Avaliacao avaliacao = new Avaliacao(comentario, estrelas, idConta);
         avaliacoes.add(avaliacao);
         System.out.println("Agiota avaliado com " + estrelas + " estrelas. Comentário: " + comentario);
     }

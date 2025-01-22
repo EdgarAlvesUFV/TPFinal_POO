@@ -14,6 +14,13 @@ public class Parcela {
         this.dataPagamento = null; // Inicialmente não paga
     }
 
+    public Parcela(int idParcela, double valor, LocalDate dataVencimento, LocalDate dataPagamento) {
+        this.idParcela = idParcela;
+        this.valor = valor;
+        this.dataVencimento = dataVencimento;
+        this.dataPagamento = dataPagamento; // Inicialmente não paga
+    }
+
     //getters e setters
     public int getIdParcela() { 
         return idParcela; 

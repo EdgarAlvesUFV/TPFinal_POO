@@ -1,4 +1,3 @@
-package edu.edgar;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -8,16 +7,20 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 public class BancoDeDados {
     private List<Cliente> clientes;
     private List<Agiota> agiotas;
+    private int contadorID = 0;
 
     public BancoDeDados() {
         this.clientes = new ArrayList<>();
         this.agiotas = new ArrayList<>();
+    }
+
+    public int getProximoId() {
+        return ++contadorID;
     }
 
     public void salvarContas() {
@@ -27,8 +30,8 @@ public class BancoDeDados {
                 String parentesSerializados = serializarParentes(cliente.getListaParentes());
                 String avaliacoesSerializadas = serializarAvaliacoes(cliente.getListaAvaliacoes());
                 String faturasSerializadas = serializarFaturas(cliente.getListaFaturas());
-                String historicoSerializado = serializarHistorico(cliente.getHistoricoCobranca());
-                writerClientes.write(cliente.getId() + "," + cliente.getCpf() + "," + cliente.getNome() + "," +
+                String historicoSerializado = serializarHistoricoCobranca(cliente.getHistoricoCobranca());
+                writerClientes.write(cliente.getIdCliente() + "," + cliente.getCpf() + "," + cliente.getNome() + "," +
                 cliente.getEndereco() + "," + cliente.getTelefone() + "," + cliente.getSenha() + "," +
                 cliente.getSaldo() + "," + cliente.getNotaTotal() + "," + avaliacoesSerializadas + "," + 
                 parentesSerializados + "," + faturasSerializadas + "," + historicoSerializado);
@@ -38,9 +41,9 @@ public class BancoDeDados {
             for (Agiota agiota : agiotas) {
                 String clientesSerializados = serializarClientes(agiota.getListaClientes());
                 String avaliacoesSerializadas = serializarAvaliacoes(agiota.getListaAvaliacoes());
-                writerAgiotas.write(agiota.getId() + "," + agiota.getCpf() + "," + agiota.getNome() + "," + 
+                writerAgiotas.write(agiota.getIdAgiota() + "," + agiota.getCpf() + "," + agiota.getNome() + "," + 
                 agiota.getSenha() + "," + agiota.getDescricao() + "," + agiota.getSaldo() + "," +
-                agiota.getTaxaJuros() + "," + agiota.isAceitaParcelado() + "," + agiota.getMaximoParcelas() + "," + 
+                agiota.getJuros() + "," + agiota.isAceitaParcelado() + "," + agiota.getMaximoParcelas() + "," + 
                 agiota.getNotaTotal() + "," + avaliacoesSerializadas + "," + clientesSerializados);
                 writerAgiotas.newLine();
             }
@@ -59,6 +62,7 @@ public class BancoDeDados {
             String linha;
             while ((linha = readerClientes.readLine()) != null) {
                 String[] partes = linha.split(",");
+                System.out.println(partes[9] + "\n");
                 Cliente cliente = new Cliente(
                         Integer.parseInt(partes[0]), // Id
                         partes[1], // CPF
@@ -73,11 +77,12 @@ public class BancoDeDados {
                 List<Parente> parentes = desserializarParentes(partes[9]);
                 List<Fatura> faturas = desserializarFaturas(partes[10]);
                 List<String> historico = desserializarHistoricoCobranca(partes[11]);
-                cliente.setListaAvaliacoes(avaliacoes);
-                cliente.setListaParentes(parentes);
-                cliente.setListaFaturas(faturas);
-                cliente.setHistoricoCobranca(historico);
+                cliente.setAvaliacoes(avaliacoes);
+                cliente.setParentes(parentes);
+                cliente.setFaturas(faturas);
+                cliente.setListaCobranca(historico);
                 clientes.add(cliente);
+                getProximoId();
             }
         // id, cpf, nome, senha, descricao, saldo, taxa, aceitaParcelado, maximoParcelas, notaTotal, avaliacoes, clientes
             // Carregando agiotas
@@ -100,6 +105,7 @@ public class BancoDeDados {
                 agiota.setListaAvaliacoes(listaAvaliacoes);
                 agiota.setListaClientes(listaClientes);
                 agiotas.add(agiota);
+                getProximoId();
             }
     
             System.out.println("Dados carregados com sucesso!");
@@ -110,34 +116,47 @@ public class BancoDeDados {
 
     private String serializarParentes(List<Parente> parentes) {
         StringBuilder builder = new StringBuilder();
-        for (Parente parente : parentes) {
-            // Formato de cada parente: "nome:telefone"
-            builder.append(parente.getNome()).append(":")
-                   .append(parente.getEndereco()).append(":")
-                   .append(parente.getTelefone()).append(":")
-                   .append(parente.getParentesco()).append(";");
+        
+        if (parentes == null || parentes.isEmpty()) {
+            builder.append(" ");
+        } else {
+            for (Parente parente : parentes) {
+                // Formato de cada parente: "nome:telefone"
+                builder.append(parente.getNome()).append(":")
+                       .append(parente.getEndereco()).append(":")
+                       .append(parente.getTelefone()).append(":")
+                       .append(parente.getParentesco()).append(";");
+            }
+            // Remove o último ponto e vírgula (;)
+            if (builder.length() > 0) {
+                builder.setLength(builder.length() - 1);
+            }
         }
-        // Remove o último ponto e vírgula (;)
-        if (builder.length() > 0) {
-            builder.setLength(builder.length() - 1);
-        }
+        
         return builder.toString();
     }
-
+    
     private String serializarAvaliacoes(List<Avaliacao> avaliacoes) {
         StringBuilder builder = new StringBuilder();
+        
+        if (avaliacoes == null ||avaliacoes.isEmpty()) {
+            builder.append(" ");
+        } else {
         for (Avaliacao avaliacao : avaliacoes) {
             builder.append(avaliacao.getDescricao()).append(":")
                    .append(avaliacao.getNota()).append(";");
-        }
-        
-        if (builder.length() > 0) {
-            builder.setLength(builder.length() - 1);
+            }
+            if (builder.length() > 0) {
+                builder.setLength(builder.length() - 1);
+            }
         }
         return builder.toString();
     }
     private String serializarFaturas(List<Fatura> faturas) {
         StringBuilder builder = new StringBuilder();
+        if (faturas == null || faturas.isEmpty()) {
+            builder.append(" ");
+        } else {
         for (Fatura fatura : faturas) {
 
             String parcelasSerializadas = serializarParcelas(fatura.getListaParcelas());
@@ -148,44 +167,50 @@ public class BancoDeDados {
                    .append(fatura.getValorTotal()).append(":")  
                    .append(fatura.getIdContaCliente()).append(":") 
                    .append(fatura.getIdContaAgiota()).append(";"); 
-        }
-        
-        if (builder.length() > 0) {
-            builder.setLength(builder.length() - 1);
+            }
+            if (builder.length() > 0) {
+                builder.setLength(builder.length() - 1);
+            }
         }
         return builder.toString();
     }
     
     private String serializarParcelas(List<Parcela> parcelas) {
         StringBuilder builder = new StringBuilder();
+        if (parcelas == null || parcelas.isEmpty()) {
+            builder.append(" ");
+        } else {
         for (Parcela parcela : parcelas) {
             builder.append(parcela.getIdParcela()).append(":")
                    .append(parcela.getValor()).append(":")
                    .append(parcela.getDataVencimento()).append(":")
                    .append(parcela.getDataPagamento()).append(";");
-        }
-        
-        if (builder.length() > 0) {
-            builder.setLength(builder.length() - 1);
+            }
+            if (builder.length() > 0) {
+                builder.setLength(builder.length() - 1);
+            }
         }
         return builder.toString();
     }
     
     private String serializarClientes(List<Cliente> clientes) {
         StringBuilder builder = new StringBuilder();
+        if (clientes == null || clientes.isEmpty()) {
+            builder.append(" ");
+        } else {
         for (Cliente cliente : clientes) {
             builder.append(cliente.getIdCliente()).append(";"); // Apenas o ID
-        }
-    
-        if (builder.length() > 0) {
-            builder.setLength(builder.length() - 1); // Remove o último ";"
+            }
+            if (builder.length() > 0) {
+                builder.setLength(builder.length() - 1); // Remove o último ";"
+            }
         }
         return builder.toString();
     }
     
     private String serializarHistoricoCobranca(List<String> historicoCobranca) {
         if (historicoCobranca == null || historicoCobranca.isEmpty()) {
-            return ""; 
+            return " "; 
         }
         return String.join(";", historicoCobranca);
     }
@@ -219,7 +244,6 @@ public class BancoDeDados {
                 }
     
             } catch (NumberFormatException e) {
-                System.out.println("Erro ao desserializar ID do cliente: " + idStr);
             }
         }
         return clientes;
@@ -254,10 +278,11 @@ public class BancoDeDados {
         String[] avaliacoesArray = avaliacoesSerializados.split(";");
         for (String avaliacoestr : avaliacoesArray) {
             String[] atributos = avaliacoestr.split(":");
-            if (atributos.length == 2) {
+            if (atributos.length == 3) {
                 String descricao = atributos[0];
                 int nota = Integer.parseInt(atributos[1]);
-                avaliacoes.add(new Avaliacao(descricao, nota)); // Crie o objeto Parente
+                int idconta = Integer.parseInt(atributos[2]);
+                avaliacoes.add(new Avaliacao(descricao, nota, idconta)); // Crie o objeto Parente
             }
         }
         return avaliacoes;
@@ -332,8 +357,7 @@ public class BancoDeDados {
         return agiotas;
     }
 
-    public Conta login() {
-        Scanner scanner = new Scanner(System.in);
+    public Conta login(Scanner scanner) {
         for (int i = 1; i <= 3;i++){
             System.out.println("Digite o CPF ou Nome de Usuário:");
             String identificador = scanner.nextLine();
@@ -344,7 +368,6 @@ public class BancoDeDados {
             Conta conta = autenticarConta(identificador, senha);
             if (conta != null) {
                 System.out.println("Login bem-sucedido! Bem-vindo(a), " + (conta instanceof Cliente ? ((Cliente) conta).getNome() : ((Agiota) conta).getNome()));
-                scanner.close();
                 return conta;
             } else {
                 System.out.println("Credenciais inválidas! " + (3-i) + " tentativas restantes.");
