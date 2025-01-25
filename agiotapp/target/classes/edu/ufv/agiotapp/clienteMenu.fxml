@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ufv.agiotapp.ClienteMenuController">
+   <top>
+      <HBox alignment="CENTER_RIGHT" maxHeight="35.0" style="-fx-background-color: #ffff;">
+         <children>
+            <HBox alignment="CENTER_LEFT" style="-fx-background-color: #ffff;" HBox.hgrow="ALWAYS">
+               <children>
+                  <ImageView fitHeight="35.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@AgiotAppIconNoBG.png" />
+                     </image>
+                  </ImageView>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="AgiotApp">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Text>
+               </children>
+            </HBox>
+            <VBox style="-fx-background-color: #ffff;">
+               <children>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Bem vindo(a)">
+                           <font>
+                              <Font size="8.0" />
+                           </font>
+                        </Label>
+                        <Label text="Nome Cliente" GridPane.rowIndex="1" />
+                     </children>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                  </GridPane>
+               </children>
+            </VBox>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </HBox>
+   </top>
+   <left>
+      <HBox>
+         <children>
+            <AnchorPane style="-fx-background-color: #f0f7ff;">
+               <children>
+                  <AnchorPane>
+                     <children>
+                        <VBox fx:id="boxMenuLateral" alignment="CENTER_RIGHT" prefHeight="615.0" prefWidth="210.0">
+                           <children>
+                              <Label contentDisplay="CENTER" minHeight="47.0" onMouseClicked="#ativarPainelExtrato" prefHeight="47.0" prefWidth="175.0" text="Extrato da Conta">
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
+                              <Label contentDisplay="CENTER" minHeight="47.0" onMouseClicked="#ativarPainelEmprestimo" prefWidth="175.0" text="Meus Empréstimos">
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
+                              <Label contentDisplay="CENTER" minHeight="47.0" onMouseClicked="#ativarPainelSimulador" prefHeight="47.0" prefWidth="175.0" text="Simular Empréstimo">
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
+                              <Label contentDisplay="CENTER" minHeight="47.0" onMouseClicked="#ativarPainelCobranca" prefWidth="175.0" text="Histórico de Cobranças">
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
+                              <Label contentDisplay="CENTER" minHeight="47.0" onMouseClicked="#ativarPainelListaAgiotas" prefWidth="175.0" text="Lista de Agiotas">
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane minHeight="615.0" minWidth="41.0" style="-fx-background-color: #ffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <effect>
+                        <DropShadow height="0.0" radius="4.75" />
+                     </effect>
+                     <children>
+                        <VBox alignment="CENTER_RIGHT" minHeight="615.0" minWidth="41.0" onMouseEntered="#hoverMenuIn" onMouseExited="#hoverMenuOut">
+                           <children>
+                              <ImageView fitHeight="47.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                              <ImageView fitHeight="47.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                              <ImageView fitHeight="47.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                              <ImageView fitHeight="47.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                              <ImageView fitHeight="47.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </children>
+               <effect>
+                  <InnerShadow height="0.0" radius="4.75" />
+               </effect>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </left>
+   <center>
+      <HBox>
+         <children>
+            <AnchorPane HBox.hgrow="ALWAYS">
+               <children>
+                  <Pane fx:id="extratoPainel" style="-fx-background-color: #d3d3d3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label text="Extrato" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="emprestimosPainel" style="-fx-background-color: #d3d3d3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label text="Emprestimo" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="simuladorPainel" style="-fx-background-color: #d3d3d3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label text="Simular" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="cobrancasPainel" style="-fx-background-color: #d3d3d3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label text="Cobrança" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="listaAgiotasPainel" style="-fx-background-color: #d3d3d3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label text="lista" />
+                     </children>
+                  </Pane>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </center>
+</BorderPane>
