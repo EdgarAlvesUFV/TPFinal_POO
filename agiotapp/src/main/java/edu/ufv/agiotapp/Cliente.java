@@ -1,4 +1,5 @@
 package edu.ufv.agiotapp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,9 +7,9 @@ public class Cliente extends Pessoa implements Conta {
     private int idCliente;
     private String cpf;
     private String senha;
-    private List<Parente> parentes; // lista parentes
-    private List<Avaliacao> avaliacoes; // lista de avaliações
-    private List<Fatura> faturas; // lista de faturas
+    private List<Parente> parentes;
+    private List<Avaliacao> avaliacoes; 
+    private List<Fatura> faturas; 
     private double notaTotal;
     private List<String> listaCobranca;
     private double saldo;
@@ -126,31 +127,35 @@ public class Cliente extends Pessoa implements Conta {
         System.out.println("Extrato do cliente: " + getNome() + ": Saldo = R$ " + saldo);
     }
 
-    public void simularEmprestimo(int quantia, double taxaJurosAnual, int prazoMes) {
+    public double simularEmprestimo(double quantia, double taxaJurosAnual, int prazoMes) {
         double jurosMensais = taxaJurosAnual / 12 / 100;
         double parcela = (quantia * jurosMensais) / (1 - Math.pow(1 + jurosMensais, -prazoMes));
         double valorTotal = parcela * prazoMes;
-
-        System.out.println("Simulação de empréstimo:");
-        System.out.println("Quantia: R$ " + quantia);
-        System.out.println("Parcelas: " + prazoMes);
-        System.out.println("Valor mensal: R$ " + parcela);
-        System.out.println("Total a pagar: R$ " + valorTotal);
+        return valorTotal;
     }
 
-    public void realizarEmprestimo(int quantia, Agiota agiota) {
-        double jurosMensais = agiota.getJuros() / 100;
-        int prazoMes = agiota.getMaximoParcelas();
-        double parcela = (quantia * jurosMensais) / (1 - Math.pow(1 + jurosMensais, -prazoMes));
-        double valorTotal = parcela * prazoMes;
+    public void realizarEmprestimo(double valorEmprestimo, int quantidadeParcelas, Agiota agiota) {
 
-        System.out.println("Empréstimo realizado com o agiota: " + agiota.getNome());
-        System.out.println("Valor total a pagar: R$ " + valorTotal);
-        System.out.println("Parcelas: " + prazoMes);
-        System.out.println("Valor mensal: R$ " + parcela);
+        List<Parcela> parcelas = new ArrayList<>();
+        double valorParcela = simularEmprestimo(valorEmprestimo, agiota.getJuros(), quantidadeParcelas) / quantidadeParcelas; 
+        for (int i = 0; i < quantidadeParcelas; i++) {
+            LocalDate dataVencimento = LocalDate.now().plusMonths(i + 1); // Vencimento a cada mês
+            Parcela parcela = new Parcela(gerarIdParcela(), valorParcela, dataVencimento);
+            parcelas.add(parcela);
+        }
+        Fatura novaFatura = new Fatura(gerarIdFatura(), parcelas, quantidadeParcelas, LocalDate.now(), valorEmprestimo, this.idCliente, agiota.getIdAgiota());
+        this.faturas.add(novaFatura);
+        this.saldo += valorEmprestimo;
+    }
 
-        saldo += quantia;
-        listaCobranca.add("Empréstimo de R$ " + quantia + " com o agiota: " + agiota.getNome());
+    // Método para gerar o ID da fatura (exemplo de implementação)
+    private int gerarIdFatura() {
+        return (int) (Math.random() * 1000); // Simples exemplo de geração
+    }
+
+    // Método para gerar o ID da parcela (exemplo de implementação)
+    private int gerarIdParcela() {
+        return (int) (Math.random() * 1000); // Simples exemplo de geração
     }
 
     public String historicoEmprestimos() {

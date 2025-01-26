@@ -46,6 +46,32 @@ public class AgiotApp extends Application {
         }
     }
 
+    static void setRootLoginCliente(String fxml, Cliente conta) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(AgiotApp.class.getResource(fxml + ".fxml"));
+        Parent root = fxmlLoader.load();
+        scene.setRoot(root);
+        
+        Object controller = fxmlLoader.getController();
+        if (controller instanceof ControladorTelas) {
+            ControladorTelas controladorAware = (ControladorTelas) controller;
+            ControladorConta controladorConta = (ControladorConta) scene.getWindow().getUserData();
+            controladorAware.setControladorContaCliente(controladorConta, conta);
+        }
+    }
+
+    static void setRootLoginAgiota(String fxml, Agiota conta) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(AgiotApp.class.getResource(fxml + ".fxml"));
+        Parent root = fxmlLoader.load();
+        scene.setRoot(root);
+        
+        Object controller = fxmlLoader.getController();
+        if (controller instanceof ControladorTelas) {
+            ControladorTelas controladorAware = (ControladorTelas) controller;
+            ControladorConta controladorConta = (ControladorConta) scene.getWindow().getUserData();
+            controladorAware.setControladorContaAgiota(controladorConta, conta);
+        }
+    }
+
     public static void main(String[] args) {
         launch();
     }

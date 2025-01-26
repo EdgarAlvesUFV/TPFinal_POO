@@ -227,4 +227,10 @@ public class ControladorConta {
             cadastrarAgiota(scanner);
         }
     }
+
+    public void realizarEmprestimo(Cliente cliente, Double valor, int qtdParcelas, Agiota agiota){
+        cliente.realizarEmprestimo(valor, qtdParcelas, agiota);
+        agiota.setSaldo(agiota.getSaldo() - valor);
+        bancoDeDados.salvarContas();
+    }
 }

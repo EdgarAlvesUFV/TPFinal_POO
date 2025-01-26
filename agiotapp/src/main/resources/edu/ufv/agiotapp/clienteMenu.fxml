@@ -2,7 +2,10 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
@@ -20,9 +23,9 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ufv.agiotapp.ClienteMenuController">
    <top>
-      <HBox alignment="CENTER_RIGHT" maxHeight="35.0" style="-fx-background-color: #ffff;">
+      <HBox alignment="CENTER_LEFT" maxHeight="35.0" style="-fx-background-color: #ffff;">
          <children>
-            <HBox alignment="CENTER_LEFT" style="-fx-background-color: #ffff;" HBox.hgrow="ALWAYS">
+            <HBox alignment="CENTER_LEFT" minHeight="35.0" minWidth="680.0" prefHeight="35.0" style="-fx-background-color: #ffff;" HBox.hgrow="ALWAYS">
                <children>
                   <ImageView fitHeight="35.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -36,7 +39,7 @@
                   </Text>
                </children>
             </HBox>
-            <VBox style="-fx-background-color: #ffff;">
+            <VBox nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: #ffff;" HBox.hgrow="ALWAYS">
                <children>
                   <GridPane>
                     <columnConstraints>
@@ -52,7 +55,7 @@
                               <Font size="8.0" />
                            </font>
                         </Label>
-                        <Label text="Nome Cliente" GridPane.rowIndex="1" />
+                        <Label fx:id="nomeCliente" text="Nome Cliente" GridPane.rowIndex="1" />
                      </children>
                      <padding>
                         <Insets right="10.0" />
@@ -67,13 +70,13 @@
       </HBox>
    </top>
    <left>
-      <HBox>
+      <HBox onMouseExited="#hoverMenuOut">
          <children>
             <AnchorPane style="-fx-background-color: #f0f7ff;">
                <children>
                   <AnchorPane>
                      <children>
-                        <VBox fx:id="boxMenuLateral" alignment="CENTER_RIGHT" prefHeight="615.0" prefWidth="210.0">
+                        <VBox fx:id="boxMenuLateral" alignment="CENTER_RIGHT" onMouseEntered="#hoverMenuIn" prefHeight="615.0" prefWidth="210.0">
                            <children>
                               <Label contentDisplay="CENTER" minHeight="47.0" onMouseClicked="#ativarPainelExtrato" prefHeight="47.0" prefWidth="175.0" text="Extrato da Conta">
                                  <padding>
@@ -139,7 +142,7 @@
                         <DropShadow height="0.0" radius="4.75" />
                      </effect>
                      <children>
-                        <VBox alignment="CENTER_RIGHT" minHeight="615.0" minWidth="41.0" onMouseEntered="#hoverMenuIn" onMouseExited="#hoverMenuOut">
+                        <VBox alignment="CENTER_RIGHT" minHeight="615.0" minWidth="41.0" onMouseEntered="#hoverMenuIn">
                            <children>
                               <ImageView fitHeight="47.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
                                  <VBox.margin>
@@ -179,37 +182,241 @@
       </HBox>
    </left>
    <center>
-      <HBox>
+      <HBox fillHeight="false">
          <children>
-            <AnchorPane HBox.hgrow="ALWAYS">
-               <children>
-                  <Pane fx:id="extratoPainel" style="-fx-background-color: #d3d3d3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane HBox.hgrow="ALWAYS" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Pane fx:id="extratoPainel" style="-fx-background-color: #d3d3d3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="88.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Extrato da Conta" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" HBox.hgrow="ALWAYS">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="50.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <HBox VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <ScrollPane fitToHeight="true" hbarPolicy="NEVER" hmax="0.0" maxHeight="600.0" minHeight="520.0" minWidth="576.0" HBox.hgrow="ALWAYS">
+                                       <content>
+                                          <VBox fillWidth="false">
+                                             <children>
+                                                <HBox minHeight="75.0" minWidth="566.0">
+                                                   <children>
+                                                      <GridPane HBox.hgrow="ALWAYS">
+                                                        <columnConstraints>
+                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="459.0" minWidth="10.0" prefWidth="283.0" />
+                                                        </columnConstraints>
+                                                        <rowConstraints>
+                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                        </rowConstraints>
+                                                         <children>
+                                                            <Label fx:id="saldoContaLabel" contentDisplay="RIGHT" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+                                                               <graphic>
+                                                                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                                                               </graphic>
+                                                            </Label>
+                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Extrato de Movimentação: " GridPane.rowIndex="1" />
+                                                         </children>
+                                                      </GridPane>
+                                                   </children>
+                                                </HBox>
+                                                <HBox alignment="TOP_CENTER" minWidth="566.0" VBox.vgrow="ALWAYS">
+                                                   <children>
+                                                      <GridPane fx:id="extratoGridPane" alignment="TOP_CENTER" gridLinesVisible="true" style="-fx-grid-lines-visible: true;" HBox.hgrow="ALWAYS">
+                                                        <columnConstraints>
+                                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                        </columnConstraints>
+                                                        <rowConstraints>
+                                                          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                                                        </rowConstraints>
+                                                         <HBox.margin>
+                                                            <Insets top="70.0" />
+                                                         </HBox.margin>
+                                                         <children>
+                                                            <Label text="Data" GridPane.halignment="CENTER" />
+                                                            <Label text="Histórico" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                                            <Label text="Parcela" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                                                            <Label text="Valor" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+                                                         </children>
+                                                      </GridPane>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </content>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </ScrollPane>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+            </children>
+        </Pane>
+        <Pane fx:id="cobrancasPainel" style="-fx-background-color: #d3d3d3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                        <Label alignment="CENTER" layoutX="150.0" layoutY="172.0" text="Tela em construção">
+                           <font>
+                              <Font size="27.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="212.0" fitWidth="253.0" layoutX="190.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@obras.png" />
+                           </image>
+                        </ImageView>
+            </children>
+        </Pane>
+        <Pane fx:id="emprestimosPainel" style="-fx-background-color: #d3d3d3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                        <Label alignment="CENTER" layoutX="163.0" layoutY="158.0" text="Tela em construção">
+                           <font>
+                              <Font size="27.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="212.0" fitWidth="253.0" layoutX="190.0" layoutY="202.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@obras.png" />
+                           </image>
+                        </ImageView>
+            </children>
+        </Pane>
+        <Pane fx:id="listaAgiotasPainel" style="-fx-background-color: #d3d3d3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                      <VBox alignment="CENTER">
+                          <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="88.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
+                                  <children>
+                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de Agiotas: AgiotApp" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" HBox.hgrow="ALWAYS">
+                                          <font>
+                                              <Font size="22.0" />
+                                          </font>
+                                          <HBox.margin>
+                                              <Insets left="50.0" />
+                                          </HBox.margin>
+                                      </Text>
+                                  </children>
+                              </HBox>
+                              <HBox VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <ScrollPane fitToHeight="true" hbarPolicy="NEVER" hmax="0.0" maxHeight="600.0" minHeight="520.0" minWidth="576.0" HBox.hgrow="ALWAYS">
+                                        <content>
+                                            <VBox fx:id="listaAgiotasVBox" fillWidth="false" />
+                                        </content>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </ScrollPane>
+                                 </children>
+                              </HBox>
+                          </children>
+                      </VBox>
+            </children>
+        </Pane>
+        <Pane fx:id="simuladorPainel" style="-fx-background-color: #d3d3d3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label text="Extrato" />
+                        <VBox alignment="TOP_CENTER" minHeight="615.0" minWidth="590.0">
+                           <children>
+                              <GridPane alignment="TOP_CENTER">
+                                <columnConstraints>
+                                  <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="288.0" minWidth="10.0" prefWidth="258.0" />
+                                  <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="426.0" minWidth="10.0" prefWidth="332.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                                </rowConstraints>
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Valor:" GridPane.rowIndex="1" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quantidade de Parcelas:" GridPane.rowIndex="2" />
+                                    <TextField fx:id="simularValor" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <TextField fx:id="simularQtdParcelas" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#simularEmprestimo" text="Simular" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Label fx:id="statusSimularLabel" textFill="#f20a0a" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                       <GridPane.margin>
+                                          <Insets left="100.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                 </children>
+                              </GridPane>
+                              <VBox alignment="TOP_CENTER" VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <GridPane gridLinesVisible="true" minWidth="590.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="136.0" minWidth="136.0" />
+                                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="140.0" minWidth="140.0" />
+                                          <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="72.0" minWidth="72.0" />
+                                          <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="111.0" minWidth="111.0" />
+                                          <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="130.0" minWidth="130.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nome" />
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Valor Disponivel" GridPane.columnIndex="1" />
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Juros a.m" GridPane.columnIndex="2" />
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total a Pagar" GridPane.columnIndex="3" />
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Selecionar Agiota" GridPane.columnIndex="4" />
+                                       </children>
+                                    </GridPane>
+                                    <HBox fillHeight="false">
+                                       <children>
+                                          <ScrollPane fitToHeight="true" fitToWidth="true" HBox.hgrow="ALWAYS">
+                                             <content>
+                                                <VBox fx:id="simularVbox" minWidth="570.0">
+                                                   <children>
+                                                      <GridPane fx:id="simuladorGridPane" gridLinesVisible="true" minWidth="590.0" VBox.vgrow="SOMETIMES">
+                                                         <columnConstraints>
+                                                            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="136.0" minWidth="136.0" />
+                                                            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="140.0" minWidth="140.0" />
+                                                            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="72.0" minWidth="72.0" />
+                                                            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="111.0" minWidth="111.0" />
+                                                            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="130.0" minWidth="130.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                      </GridPane>
+                                                   </children>
+                                                </VBox>
+                                             </content>
+                                          </ScrollPane>
+                                       </children>
+                                    </HBox>
+                                    <Button mnemonicParsing="false" onAction="#realizarEmprestimo" text="Realizar Empréstimo" VBox.vgrow="ALWAYS">
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" top="20.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
                      </children>
-                  </Pane>
-                  <Pane fx:id="emprestimosPainel" style="-fx-background-color: #d3d3d3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <Label text="Emprestimo" />
-                     </children>
-                  </Pane>
-                  <Pane fx:id="simuladorPainel" style="-fx-background-color: #d3d3d3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <Label text="Simular" />
-                     </children>
-                  </Pane>
-                  <Pane fx:id="cobrancasPainel" style="-fx-background-color: #d3d3d3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <Label text="Cobrança" />
-                     </children>
-                  </Pane>
-                  <Pane fx:id="listaAgiotasPainel" style="-fx-background-color: #d3d3d3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <Label text="lista" />
-                     </children>
-                  </Pane>
-               </children>
-            </AnchorPane>
+        </Pane>
+    </children>
+</AnchorPane>
+
          </children>
       </HBox>
    </center>

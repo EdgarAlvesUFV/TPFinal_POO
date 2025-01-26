@@ -43,6 +43,14 @@ public class CadastroController implements ControladorTelas{
     public void setControladorConta(ControladorConta controladorConta) {
         this.controladorConta = controladorConta;
     }
+    @Override
+    public void setControladorContaAgiota(ControladorConta controladorConta, Agiota agiota) {
+        
+    }
+    @Override
+    public void setControladorContaCliente(ControladorConta controladorConta, Cliente cliente) {
+        
+    }
 
     @FXML
     private void initialize(){

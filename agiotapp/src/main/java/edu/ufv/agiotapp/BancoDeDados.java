@@ -1,9 +1,10 @@
 package edu.ufv.agiotapp;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,8 +25,11 @@ public class BancoDeDados {
     }
 
     public void salvarContas() {
-        try (BufferedWriter writerClientes = new BufferedWriter(new FileWriter("agiotapp/src/main/java/edu/ufv/agiotapp/Dados/clientes.txt"));
-             BufferedWriter writerAgiotas = new BufferedWriter(new FileWriter("agiotapp/src/main/java/edu/ufv/agiotapp/Dados/agiotas.txt"))) {
+        Path pathCliente = Paths.get("agiotapp","src", "main", "java", "edu", "ufv", "agiotapp", "Dados", "clientes.txt").toAbsolutePath();
+        Path pathAgiotas = Paths.get("agiotapp","src", "main", "java", "edu", "ufv", "agiotapp", "Dados", "agiotas.txt").toAbsolutePath();
+
+        try (BufferedWriter writerClientes = Files.newBufferedWriter(pathCliente);
+             BufferedWriter writerAgiotas = Files.newBufferedWriter(pathAgiotas)) {
             for (Cliente cliente : clientes) {
                 String parentesSerializados = serializarParentes(cliente.getListaParentes());
                 String avaliacoesSerializadas = serializarAvaliacoes(cliente.getListaAvaliacoes());
@@ -55,14 +59,16 @@ public class BancoDeDados {
     }
 
     public void carregarContas() {
-        try (BufferedReader readerClientes = new BufferedReader(new FileReader("agiotapp/src/main/java/edu/ufv/agiotapp/Dados/clientes.txt"));
-             BufferedReader readerAgiotas = new BufferedReader(new FileReader("agiotapp/src/main/java/edu/ufv/agiotapp/Dados/agiotas.txt"))) {
+        Path pathCliente = Paths.get("agiotapp","src", "main", "java", "edu", "ufv", "agiotapp", "Dados", "clientes.txt").toAbsolutePath();
+        Path pathAgiotas = Paths.get("agiotapp","src", "main", "java", "edu", "ufv", "agiotapp", "Dados", "agiotas.txt").toAbsolutePath();
+
+        try (BufferedReader readerClientes = Files.newBufferedReader(pathCliente);
+             BufferedReader readerAgiotas = Files.newBufferedReader(pathAgiotas)) {
             // id, cpf, nome, endereco, telefone, senha, saldo, notaTotal, avaliacoes, parentes, faturas, historico
             // Carregando clientes
             String linha;
             while ((linha = readerClientes.readLine()) != null) {
                 String[] partes = linha.split("§");
-                System.out.println(partes[9] + "\n");
                 Cliente cliente = new Cliente(
                         Integer.parseInt(partes[0]), // Id
                         partes[1], // CPF

@@ -20,6 +20,15 @@ public class LoginController implements ControladorTelas{
         this.controladorConta = controladorConta;
     }
 
+    @Override
+    public void setControladorContaAgiota(ControladorConta controladorConta, Agiota agiota) {
+        
+    }
+    @Override
+    public void setControladorContaCliente(ControladorConta controladorConta, Cliente cliente) {
+        
+    }
+
     @FXML
     private void handleLoginButton() {
     
@@ -47,9 +56,9 @@ public class LoginController implements ControladorTelas{
         
             Stage stage = (Stage) userField.getScene().getWindow();
             if (conta instanceof Cliente) {
-                AgiotApp.setRoot("clienteMenu");
+                AgiotApp.setRootLoginCliente("clienteMenu", (Cliente) conta);
             } else if (conta instanceof Agiota) {
-                AgiotApp.setRoot("agiotaMenu");
+                AgiotApp.setRootLoginAgiota("agiotaMenu",(Agiota) conta);
             }
     }
 }
