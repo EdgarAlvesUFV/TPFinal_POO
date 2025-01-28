@@ -7,6 +7,7 @@ import java.util.Optional;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
@@ -39,6 +40,9 @@ public class ClienteMenuController implements ControladorTelas{
     @FXML private VBox boxMenuLateral; //set width 41
     @FXML private VBox listaAgiotasVBox;
     @FXML private VBox simularVbox;
+    @FXML private VBox listaCobrancavBox;
+    @FXML private VBox listaHistoricovBox;
+    @FXML private VBox listaEmprestimosVBox;
     @FXML private GridPane extratoGridPane;
     @FXML private GridPane simuladorGridPane;
     @FXML private Label nomeCliente;
@@ -71,19 +75,36 @@ public class ClienteMenuController implements ControladorTelas{
     }
 
 
-    private void exibirExtrato(){//data, historico, parcela, valor
-
+    private void exibirExtrato() {
+        HBox hBox = new HBox();
+        hBox.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+        listaHistoricovBox.getChildren().clear();
+    
+        GridPane gridPane = new GridPane();
+        gridPane.setPrefSize(Region.USE_COMPUTED_SIZE, 60);
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setPrefWidth(Region.USE_COMPUTED_SIZE);
+        col1.setMinWidth(400);
+        col1.setMaxWidth(400);
+        gridPane.getColumnConstraints().addAll(col1);
+        int i = 0;
+        for (String cobranca : cliente.getHistoricoCobranca()) {
+            RowConstraints row1 = new RowConstraints();
+            row1.setMinHeight(20);
+            row1.setPrefHeight(30);
+            gridPane.getRowConstraints().add(row1);
+    
+            Text text = new Text(cobranca);
+            GridPane.setMargin(text, new Insets(0, 0, 10, 10));
+            gridPane.add(text, 0, i); // Corrigido: coluna 0 e linha i
+            i++; // Incrementa a linha para a próxima cobrança
+        }
+        hBox.getChildren().addAll(gridPane);
+        HBox.setMargin(gridPane, new Insets(0, 40, 0, 0));
+        listaHistoricovBox.getChildren().add(hBox);
     }
     
-    private void adicionarHistorico(GridPane grid){
-        RowConstraints row1 = new RowConstraints();
-        row1.setPrefHeight(30);
-
-        /*
-         * for faturas
-         * for parcelas
-         */
-    }
+    
     @FXML 
     private void simularEmprestimo(){
         Double valorSimular = null;
@@ -187,12 +208,6 @@ public class ClienteMenuController implements ControladorTelas{
     private void exibirAgiota(String nome, String descricao, double nota, double valor){
         HBox hBox = new HBox();
         hBox.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
-        
-
-        ImageView mainImageView = new ImageView(new Image(getClass().getResourceAsStream("/edu/ufv/agiotapp/AgiotAppIconNoBG.png")));
-        mainImageView.setFitHeight(80);
-        mainImageView.setFitWidth(60);
-        HBox.setMargin(mainImageView, new Insets(0, 0, 0, 0));
 
         GridPane gridPane = new GridPane();
         gridPane.setPrefSize(Region.USE_COMPUTED_SIZE, 60);
@@ -226,9 +241,9 @@ public class ClienteMenuController implements ControladorTelas{
         for (int i = 0; i < 5; i++) {
             ImageView smallImageView;
             if (i < nota) {
-                smallImageView = new ImageView(new Image(getClass().getResourceAsStream("/edu/ufv/agiotapp/AgiotAppIconNoBG.png")));
+                smallImageView = new ImageView(new Image(getClass().getResourceAsStream("/edu/ufv/agiotapp/estrela1.png")));
             } else {
-                smallImageView = new ImageView(new Image(getClass().getResourceAsStream("/edu/ufv/agiotapp/botao-voltar.png")));
+                smallImageView = new ImageView(new Image(getClass().getResourceAsStream("/edu/ufv/agiotapp/estrela0.png")));
             }
             smallImageView.setFitHeight(20);
             smallImageView.setFitWidth(20);
@@ -240,9 +255,36 @@ public class ClienteMenuController implements ControladorTelas{
         GridPane.setMargin(text3, new Insets(20, 0, 0, 10));
         gridPane.add(text3, 1, 1);
 
-        hBox.getChildren().addAll(mainImageView, gridPane);
+        hBox.getChildren().addAll(gridPane);
         HBox.setMargin(gridPane, new Insets(0, 40, 0, 0));
         listaAgiotasVBox.getChildren().add(hBox);
+    }
+
+    private void exibirCobrancas(){
+        HBox hBox = new HBox();
+        hBox.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+
+        GridPane gridPane = new GridPane();
+        gridPane.setPrefSize(Region.USE_COMPUTED_SIZE, 60);
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setPrefWidth(Region.USE_COMPUTED_SIZE);
+        col1.setMinWidth(400);
+        col1.setMaxWidth(400);
+        int i = 0;
+        for (String cobranca : cliente.getHistoricoCobranca()){
+
+            RowConstraints row1 = new RowConstraints();
+            row1.setMinHeight(10);
+            row1.setPrefHeight(30);
+            gridPane.getRowConstraints().add(row1);
+                
+            Text text = new Text(cobranca);
+            GridPane.setMargin(text, new Insets(0, 0, 10, 10));
+            simuladorGridPane.add(text, 0, i);
+        }
+        hBox.getChildren().addAll(gridPane);
+        HBox.setMargin(gridPane, new Insets(0, 40, 0, 0));
+        listaCobrancavBox.getChildren().add(hBox);
     }
 
     private static String truncateText(String text, int maxChars) {
@@ -250,6 +292,89 @@ public class ClienteMenuController implements ControladorTelas{
             return text.substring(0, maxChars);
         }
         return text;
+    }
+
+    private void exibirEmprestimos() {
+        HBox hBox = new HBox();
+        hBox.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+        listaEmprestimosVBox.getChildren().clear();
+        GridPane gridPane = new GridPane();
+        gridPane.setPrefSize(Region.USE_COMPUTED_SIZE, 60);
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setPrefWidth(Region.USE_COMPUTED_SIZE);
+        col1.setMinWidth(200);
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setPrefWidth(Region.USE_COMPUTED_SIZE);
+        ColumnConstraints col3 = new ColumnConstraints();
+        col3.setPrefWidth(Region.USE_COMPUTED_SIZE); // Corrigir a definição de col3
+        gridPane.getColumnConstraints().addAll(col1, col2, col3);
+        System.out.println(cliente.getListaFaturas());
+        int i = 0;
+        for (Fatura fatura : this.cliente.getListaFaturas()) {
+            RowConstraints row1 = new RowConstraints();
+            row1.setPrefHeight(30);
+            System.out.println("Aqui" + fatura.getValorTotal());
+            ImageView smallImageView;
+            smallImageView = new ImageView(new Image(getClass().getResourceAsStream("/edu/ufv/agiotapp/notaPositivo.png")));
+            smallImageView.setFitHeight(20);
+            smallImageView.setFitWidth(20);
+            smallImageView.setOnMouseClicked(event -> enviarNota(1, fatura.getIdContaAgiota()));
+            smallImageView.setCursor(Cursor.HAND); // Corrigir definição de cursor
+            smallImageView.setPickOnBounds(true);
+            GridPane.setMargin(smallImageView, new Insets(10, 20, 0, 10));
+            gridPane.add(smallImageView, 0, i);
+    
+            smallImageView = new ImageView(new Image(getClass().getResourceAsStream("/edu/ufv/agiotapp/notaNegativo.png")));
+            smallImageView.setFitHeight(20);
+            smallImageView.setFitWidth(20);
+            smallImageView.setOnMouseClicked(event -> enviarNota(-1, fatura.getIdContaAgiota()));
+            smallImageView.setCursor(Cursor.HAND); // Corrigir definição de cursor
+            smallImageView.setPickOnBounds(true);
+            GridPane.setMargin(smallImageView, new Insets(10, 30, 0, 50));
+            gridPane.add(smallImageView, 0, i);
+    
+            Text text1 = new Text(String.format("%s | R$ %s | Parcelas: %s", fatura.getDataEmissao(), fatura.getValorTotal(), fatura.getQuantidadeParcelas()));
+            GridPane.setMargin(text1, new Insets(0, 0, 0, 0));
+            gridPane.add(text1, 2, i);
+    
+            // Adiciona o label "Avaliar o agiota" + encontrarAgiotaPorId(fatura.getIdContaAgiota())
+            Text text3 = new Text("Avaliar o agiota: " + encontrarAgiotaPorId(fatura.getIdContaAgiota()).getNome());
+            GridPane.setMargin(text3, new Insets(10, 0, 0, 10));
+            gridPane.add(text3, 0, i + 1, 3, 1);
+    
+            gridPane.getRowConstraints().add(row1);
+            i++;
+            int j = 1;
+            for (Parcela parcela : fatura.getListaParcelas()) {
+                RowConstraints row2 = new RowConstraints();
+                row2.setPrefHeight(30);
+    
+                Text text2 = new Text(String.format("R$%.2f | Parcelas: %s/%s | Vencimento: %s", parcela.getValor(), j, fatura.getQuantidadeParcelas(), parcela.getDataVencimento()));
+                GridPane.setMargin(text2, new Insets(0, 0, 0, 0));
+                gridPane.add(text2, 2, i);
+                gridPane.getRowConstraints().add(row2);
+                i++;
+                j++;
+            }
+            i++; // Incrementa i para garantir que o label "Avaliar o agiota" não se sobreponha às parcelas
+        }
+        hBox.getChildren().addAll(gridPane);
+        HBox.setMargin(gridPane, new Insets(0, 40, 0, 0));
+        listaEmprestimosVBox.getChildren().add(hBox);
+    }
+    
+
+    private void enviarNota(double i, int idAgiota){
+        controladorConta.enviarNota(encontrarAgiotaPorId(idAgiota), i);
+    }
+
+    private Agiota encontrarAgiotaPorId(int idAgiota) {
+        for (Agiota agiota : controladorConta.bancoDeDados.getListaAgiotas()) {
+            if (agiota.getIdAgiota() == idAgiota) {
+                return agiota;
+            }
+        }
+        return null; // Retorna null se nenhum agiota for encontrado com o ID fornecido
     }
 
     @FXML
@@ -271,10 +396,12 @@ public class ClienteMenuController implements ControladorTelas{
     private void ativarPainelExtrato(){
         extratoPainel.toFront();
         saldoContaLabel.setText(String.format("Saldo: R$ %.2f ", cliente.getSaldo()));
+        exibirExtrato();
     } 
     @FXML 
     private void ativarPainelEmprestimo(){
         emprestimosPainel.toFront();
+        exibirEmprestimos();
     } 
     @FXML 
     private void ativarPainelSimulador(){
@@ -283,14 +410,14 @@ public class ClienteMenuController implements ControladorTelas{
     @FXML 
     private void ativarPainelCobranca(){
         cobrancasPainel.toFront();
+        exibirCobrancas();
     } 
     @FXML 
     private void ativarPainelListaAgiotas(){
         listaAgiotasPainel.toFront();
-        if (listaAgiotasVBox.getChildren().isEmpty()) {
-            for (Agiota agiota : controladorConta.bancoDeDados.getListaAgiotas()){
-                exibirAgiota(agiota.getNome(), agiota.getDescricao(), agiota.getNotaTotal(), agiota.getSaldo());
-            }
+        listaAgiotasVBox.getChildren().clear();
+        for (Agiota agiota : controladorConta.bancoDeDados.getListaAgiotas()){
+            exibirAgiota(agiota.getNome(), agiota.getDescricao(), agiota.getNotaTotal(), agiota.getSaldo());
         }
-    } 
+    }
 }

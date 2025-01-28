@@ -2,9 +2,9 @@ package edu.ufv.agiotapp;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -86,7 +86,7 @@ public class BancoDeDados {
                 cliente.setAvaliacoes(avaliacoes);
                 cliente.setParentes(parentes);
                 cliente.setFaturas(faturas);
-                cliente.setListaCobranca(historico);
+                cliente.sethistorico(historico);
                 clientes.add(cliente);
                 getProximoId();
             }
@@ -158,46 +158,54 @@ public class BancoDeDados {
         }
         return builder.toString();
     }
+
     private String serializarFaturas(List<Fatura> faturas) {
         StringBuilder builder = new StringBuilder();
-        if (faturas == null || faturas.isEmpty()) {
-            builder.append(" ");
-        } else {
-        for (Fatura fatura : faturas) {
 
-            String parcelasSerializadas = serializarParcelas(fatura.getListaParcelas());
-            builder.append(fatura.getIdFatura()).append(":")  
-                   .append(parcelasSerializadas).append(":")  
-                   .append(fatura.getQuantidadeParcelas()).append(":")
-                   .append(fatura.getDataEmissao()).append(":")  
-                   .append(fatura.getValorTotal()).append(":")  
-                   .append(fatura.getIdContaCliente()).append(":") 
-                   .append(fatura.getIdContaAgiota()).append(";"); 
-            }
-            if (builder.length() > 0) {
-                builder.setLength(builder.length() - 1);
-            }
+        if (faturas == null || faturas.isEmpty()) {
+            return " ";
         }
+
+        for (Fatura fatura : faturas) {
+            String parcelasSerializadas = serializarParcelas(fatura.getListaParcelas());
+
+            builder.append(fatura.getIdFatura()).append(":")
+                .append("[") // Adicionamos colchetes para indicar as parcelas corretamente
+                .append(parcelasSerializadas)
+                .append("]").append(":") // Fecha as parcelas
+                .append(fatura.getQuantidadeParcelas()).append(":")
+                .append(fatura.getDataEmissao()).append(":")
+                .append(fatura.getValorTotal()).append(":")
+                .append(fatura.getIdContaCliente()).append(":")
+                .append(fatura.getIdContaAgiota()).append(";");
+        }
+
+        if (builder.length() > 0) {
+            builder.setLength(builder.length() - 1); // Remove o último ";"
+        }
+        
         return builder.toString();
     }
+
     
     private String serializarParcelas(List<Parcela> parcelas) {
-        StringBuilder builder = new StringBuilder();
         if (parcelas == null || parcelas.isEmpty()) {
-            builder.append(" ");
-        } else {
+            return " ";
+        }
+    
+        StringBuilder builder = new StringBuilder();
         for (Parcela parcela : parcelas) {
             builder.append(parcela.getIdParcela()).append(":")
                    .append(parcela.getValor()).append(":")
-                   .append(parcela.getDataVencimento()).append(":")
-                   .append(parcela.getDataPagamento()).append(";");
-            }
-            if (builder.length() > 0) {
-                builder.setLength(builder.length() - 1);
-            }
+                   .append(parcela.getDataVencimento() != null ? parcela.getDataVencimento() : "null").append(":")
+                   .append(parcela.getDataPagamento() != null ? parcela.getDataPagamento() : "null").append(",");
+        }
+        // Remove o último ","
+        if (builder.length() > 0) {
+            builder.setLength(builder.length() - 1);
         }
         return builder.toString();
-    }
+    }  
     
     private String serializarClientes(List<Cliente> clientes) {
         StringBuilder builder = new StringBuilder();
@@ -296,53 +304,107 @@ public class BancoDeDados {
 
     private List<Fatura> desserializarFaturas(String faturasSerializadas) {
         List<Fatura> faturas = new ArrayList<>();
-        if (faturasSerializadas == null || faturasSerializadas.isEmpty()) {
+        
+        if (faturasSerializadas == null || faturasSerializadas.trim().isEmpty()) {
+            System.out.println("String de faturas vazia ou nula");
             return faturas;
         }
     
-        String[] faturasArray = faturasSerializadas.split(";");
-        for (String faturaStr : faturasArray) {
-            String[] atributos = faturaStr.split(":");
-            if (atributos.length == 7) {
-                int idFatura = Integer.parseInt(atributos[0]);
-                List<Parcela> parcelas = desserializarParcelas(atributos[1]);
-                int quantidadeParcelas = Integer.parseInt(atributos[2]);
-                LocalDate dataEmissao = LocalDate.parse(atributos[3]);
-                double valorTotal = Double.parseDouble(atributos[4]);
-                int idContaCliente = Integer.parseInt(atributos[5]);
-                int idContaAgiota = Integer.parseInt(atributos[6]);
+        System.out.println("String de faturas recebida: " + faturasSerializadas);
     
-                // Cria o objeto Fatura
+        String[] faturasArray = faturasSerializadas.split(";");
+    
+        for (String faturaStr : faturasArray) {
+            System.out.println("Processando fatura: " + faturaStr);
+    
+            // Encontra a parte das parcelas usando colchetes []
+            int startParcelas = faturaStr.indexOf("[");
+            int endParcelas = faturaStr.indexOf("]");
+    
+            if (startParcelas == -1 || endParcelas == -1) {
+                System.err.println("Erro: formato de parcelas inválido na fatura - " + faturaStr);
+                continue;
+            }
+    
+            // Extrai as parcelas corretamente
+            String parcelasStr = faturaStr.substring(startParcelas + 1, endParcelas);
+            List<Parcela> parcelas = desserializarParcelas(parcelasStr);
+    
+            // Remove as parcelas da string para evitar divisão errada
+            String restante = faturaStr.substring(0, startParcelas) + faturaStr.substring(endParcelas + 2);
+    
+            String[] atributos = restante.split(":");
+    
+            if (atributos.length < 6) {
+                System.err.println("Erro: número insuficiente de atributos na fatura - " + faturaStr);
+                continue;
+            }
+    
+            try {
+                int idFatura = Integer.parseInt(atributos[0]);
+                int quantidadeParcelas = Integer.parseInt(atributos[1]);
+                LocalDate dataEmissao = atributos[2].equals("null") ? null : LocalDate.parse(atributos[2]);
+                double valorTotal = Double.parseDouble(atributos[3]);
+                int idContaCliente = Integer.parseInt(atributos[4]);
+                int idContaAgiota = Integer.parseInt(atributos[5]);
+    
+                // Criando o objeto Fatura corretamente
                 Fatura fatura = new Fatura(idFatura, parcelas, quantidadeParcelas, dataEmissao, valorTotal, idContaCliente, idContaAgiota);
                 faturas.add(fatura);
+    
+            } catch (NumberFormatException e) {
+                System.err.println("Erro ao converter valores numéricos na fatura: " + faturaStr);
+                e.printStackTrace();
+            } catch (Exception e) {
+                System.err.println("Erro inesperado ao desserializar fatura: " + faturaStr);
+                e.printStackTrace();
             }
         }
         return faturas;
     }
-
+    
+    
     private List<Parcela> desserializarParcelas(String parcelasSerializadas) {
         List<Parcela> parcelas = new ArrayList<>();
-        if (parcelasSerializadas == null || parcelasSerializadas.isEmpty()) {
+    
+        if (parcelasSerializadas == null || parcelasSerializadas.trim().isEmpty() || parcelasSerializadas.equals(" ")) {
+            System.out.println("String de parcelas vazia ou nula");
             return parcelas;
         }
     
-        String[] parcelasArray = parcelasSerializadas.split(";");
+        System.out.println("String de parcelas recebida: " + parcelasSerializadas);
+    
+        String[] parcelasArray = parcelasSerializadas.split(",");
         for (String parcelaStr : parcelasArray) {
+            System.out.println("Processando parcela: " + parcelaStr);
+    
             String[] atributos = parcelaStr.split(":");
-            if (atributos.length == 4) {
+    
+            if (atributos.length < 4) {
+                System.err.println("Erro: número insuficiente de atributos na parcela - " + parcelaStr);
+                continue;
+            }
+    
+            try {
                 int idParcela = Integer.parseInt(atributos[0]);
                 double valor = Double.parseDouble(atributos[1]);
-                LocalDate dataVencimento = LocalDate.parse(atributos[2]);
-                LocalDate dataPagamento = LocalDate.parse(atributos[3]);
+                LocalDate dataVencimento = atributos[2].equals("null") ? null : LocalDate.parse(atributos[2]);
+                LocalDate dataPagamento = atributos[3].equals("null") ? null : LocalDate.parse(atributos[3]);
     
-                // Cria o objeto Parcela
                 Parcela parcela = new Parcela(idParcela, valor, dataVencimento, dataPagamento);
                 parcelas.add(parcela);
+    
+            } catch (NumberFormatException e) {
+                System.err.println("Erro ao converter valores numéricos na parcela: " + parcelaStr);
+                e.printStackTrace();
+            } catch (Exception e) {
+                System.err.println("Erro inesperado ao desserializar parcela: " + parcelaStr);
+                e.printStackTrace();
             }
         }
         return parcelas;
     }
-    
+     
     
     public void adicionarCliente(Cliente cliente) {
         clientes.add(cliente);

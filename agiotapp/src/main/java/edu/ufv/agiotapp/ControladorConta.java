@@ -83,7 +83,7 @@ public class ControladorConta {
 
                 case 6:
                     System.out.println("Histórico de Cobranças:");
-                    System.out.println(cliente.verHistoricoCobranca());
+                    System.out.println(cliente.getHistoricoCobranca());
                     break;
 
                 case 0:
@@ -231,6 +231,11 @@ public class ControladorConta {
     public void realizarEmprestimo(Cliente cliente, Double valor, int qtdParcelas, Agiota agiota){
         cliente.realizarEmprestimo(valor, qtdParcelas, agiota);
         agiota.setSaldo(agiota.getSaldo() - valor);
+        bancoDeDados.salvarContas();
+    }
+
+    public void enviarNota(Agiota agiota, double nota){
+        agiota.setNotaTotal(nota);
         bancoDeDados.salvarContas();
     }
 }

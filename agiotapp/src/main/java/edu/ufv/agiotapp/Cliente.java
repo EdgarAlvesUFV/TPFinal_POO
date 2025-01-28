@@ -11,7 +11,7 @@ public class Cliente extends Pessoa implements Conta {
     private List<Avaliacao> avaliacoes; 
     private List<Fatura> faturas; 
     private double notaTotal;
-    private List<String> listaCobranca;
+    private List<String> historico;
     private double saldo;
 
     public Cliente(int id, String cpf, String nome, String endereco, String telefone, String senha, 
@@ -24,7 +24,7 @@ public class Cliente extends Pessoa implements Conta {
         this.avaliacoes = new ArrayList<>();;
         this.faturas = new ArrayList<>();;
         this.notaTotal = notaTotal;
-        this.listaCobranca = new ArrayList<>();;
+        this.historico = new ArrayList<>();;
         this.saldo = saldo;
     }
 
@@ -37,7 +37,7 @@ public class Cliente extends Pessoa implements Conta {
         this.avaliacoes = new ArrayList<>();;
         this.faturas = new ArrayList<>();;
         this.notaTotal = 0.0;
-        this.listaCobranca = new ArrayList<>();;
+        this.historico = new ArrayList<>();;
         this.saldo = 0.0;
     }
 
@@ -94,11 +94,11 @@ public class Cliente extends Pessoa implements Conta {
     }
 
     public List<String> getHistoricoCobranca() {
-        return listaCobranca;
+        return historico;
     }
 
-    public void setListaCobranca(List<String> listaCobranca) {
-        this.listaCobranca = listaCobranca;
+    public void sethistorico(List<String> historico) {
+        this.historico = historico;
     }
 
     public double getSaldo() {
@@ -146,6 +146,7 @@ public class Cliente extends Pessoa implements Conta {
         Fatura novaFatura = new Fatura(gerarIdFatura(), parcelas, quantidadeParcelas, LocalDate.now(), valorEmprestimo, this.idCliente, agiota.getIdAgiota());
         this.faturas.add(novaFatura);
         this.saldo += valorEmprestimo;
+        adicionarHistorico(String.format("Data %s | Empréstimo concedido - %s | Valor: R$ %.2f ", LocalDate.now(),  agiota.getNome(), valorEmprestimo));
     }
 
     // Método para gerar o ID da fatura (exemplo de implementação)
@@ -193,16 +194,7 @@ public class Cliente extends Pessoa implements Conta {
         System.out.println("Cliente avaliado com " + estrelas + " estrelas. Comentário: " + comentario);
     }
 
-    public void adicionarCobranca(String cobranca) {
-        this.listaCobranca.add(cobranca);
-        System.out.println("Cobrança enviada");
-    }
-
-    public String verHistoricoCobranca() {
-        StringBuilder historico = new StringBuilder();
-        for (String cobranca : listaCobranca) {
-            historico.append(cobranca).append("\n");
-        }
-        return historico.toString();
+    public void adicionarHistorico(String historico) {
+        this.historico.add(historico);
     }
 }

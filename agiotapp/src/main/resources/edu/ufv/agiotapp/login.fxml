@@ -16,43 +16,48 @@
 
 <VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: linear-gradient(from 0% 0% to 100% 0%, blue, red);" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ufv.agiotapp.LoginController">
    <children>
-      <AnchorPane prefHeight="600.0" prefWidth="800.0">
+      <AnchorPane prefHeight="600.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
          <children>
-            <Pane layoutX="242.0" layoutY="124.0" prefHeight="353.0" prefWidth="317.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 4);" AnchorPane.bottomAnchor="100.0" AnchorPane.topAnchor="100.0">
+            <Pane focusTraversable="true" layoutX="242.0" layoutY="124.0" maxWidth="330.0" minHeight="380.0" minWidth="320.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 4);" AnchorPane.leftAnchor="240.0" AnchorPane.rightAnchor="240.0">
                <children>
-                  <TextField fx:id="userField" layoutX="73.0" layoutY="164.0" promptText="12345678900" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
-                  <PasswordField fx:id="passwordField" layoutX="73.0" layoutY="222.0" onAction="#handleLoginButton" promptText="*********" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
-                  <Button layoutX="125.0" layoutY="267.0" mnemonicParsing="false" onAction="#handleLoginButton" onMouseClicked="#handleLoginButton" style="-fx-background-color: #336699; -fx-font-size: 16px; -fx-text-fill: white; -fx-background-radius: 10;" text="Login" textAlignment="CENTER">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <ImageView fitHeight="78.0" fitWidth="112.0" layoutX="196.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@AgiotAppIconNoBG.png" />
-                     </image>
-                  </ImageView>
-                  <Text layoutX="18.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AgiotApp">
-                     <font>
-                        <Font size="37.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="92.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuário">
-                     <font>
-                        <Font size="35.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="118.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Senha">
-                     <font>
-                        <Font size="26.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="14.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ainda nao tem cadastro?" />
-                  <Button layoutX="185.0" layoutY="317.0" mnemonicParsing="false" onAction="#switchToCadastro" style="-fx-background-color: #669933; -fx-font-size: 16px; -fx-text-fill: white; -fx-background-radius: 10;" text="Cadastre-se">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor></Button>
-                  <Label fx:id="loginStatus" layoutX="74.0" layoutY="254.0" prefHeight="16.0" prefWidth="169.0" />
+                  <AnchorPane prefHeight="380.0" prefWidth="320.0">
+                     <children>
+                        <TextField fx:id="userField" layoutX="70.0" layoutY="148.0" promptText="12345678900" style="-fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.bottomAnchor="208.0703125" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="148.0" />
+                        <PasswordField fx:id="passwordField" layoutX="84.0" layoutY="229.0" onAction="#handleLoginButton" promptText="*********" style="-fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.bottomAnchor="127.265625" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="229.265625" />
+                        <Button layoutX="124.0" layoutY="296.0" mnemonicParsing="false" onAction="#handleLoginButton" onMouseClicked="#handleLoginButton" style="-fx-background-color: #336699; -fx-font-size: 16px; -fx-text-fill: white; -fx-background-radius: 10;" text="Login" textAlignment="CENTER" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="124.0" AnchorPane.rightAnchor="126.0" AnchorPane.topAnchor="296.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <ImageView fitHeight="78.0" fitWidth="112.0" layoutX="198.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="283.24254608154297" AnchorPane.leftAnchor="198.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="26.0">
+                           <image>
+                              <Image url="@AgiotAppIconNoBG.png" />
+                           </image>
+                        </ImageView>
+                        <Text layoutX="27.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AgiotApp" AnchorPane.bottomAnchor="296.9296875" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="124.49462890625" AnchorPane.topAnchor="39.65576171875">
+                           <font>
+                              <Font size="37.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="93.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuário" AnchorPane.bottomAnchor="240.81591796875" AnchorPane.leftAnchor="93.0" AnchorPane.rightAnchor="93.98974609375" AnchorPane.topAnchor="98.0703125">
+                           <font>
+                              <Font size="35.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="119.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Senha" AnchorPane.bottomAnchor="159.8046875" AnchorPane.leftAnchor="119.0" AnchorPane.rightAnchor="119.62060546875" AnchorPane.topAnchor="189.8662109375">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="11.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ainda nao tem cadastro?" AnchorPane.bottomAnchor="21.265625" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="147.0" AnchorPane.topAnchor="343.0" />
+                        <Button layoutX="192.0" layoutY="336.0" mnemonicParsing="false" onAction="#switchToCadastro" style="-fx-background-color: #669933; -fx-font-size: 16px; -fx-text-fill: white; -fx-background-radius: 10;" text="Cadastre-se" AnchorPane.bottomAnchor="14.265625" AnchorPane.leftAnchor="192.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="336.265625">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Label fx:id="loginStatus" layoutX="76.0" layoutY="265.0" prefHeight="16.0" prefWidth="169.0" AnchorPane.bottomAnchor="99.0" AnchorPane.leftAnchor="76.0" AnchorPane.rightAnchor="76.0" AnchorPane.topAnchor="265.0" />
+                     </children>
+                  </AnchorPane>
                </children>
             </Pane>
          </children>

@@ -158,9 +158,17 @@ public class Agiota implements Conta {
         return notaTotal; 
         }
 
-    public void setNotaTotal(double notaTotal) { 
-        this.notaTotal = notaTotal; 
+    public void setNotaTotal(double nota) { 
+        if (nota == 1 && this.notaTotal == 0) {
+            this.notaTotal = 5;
+        } else if (nota == 1) {
+            this.notaTotal = (this.notaTotal+5)/2;
+        } else if (this.notaTotal == 3){
+            this.notaTotal = 4;
+        } else {
+            this.notaTotal = this.notaTotal-1;
         }
+    }
 
     //metodos
     public String getTipoConta() {
@@ -185,13 +193,5 @@ public class Agiota implements Conta {
         Avaliacao avaliacao = new Avaliacao(comentario, estrelas, this.idAgiota);
         avaliacoes.add(avaliacao);
         System.out.println("Agiota avaliado com " + estrelas + " estrelas. Comentário: " + comentario);
-    }
-
-    public void relatarCobranca(int idConta, String mensagem) {
-        for (Cliente cliente : listaClientes) {
-            if (cliente.getIdCliente() == idConta) {
-                cliente.adicionarCobranca(mensagem);
-            }
-        }
     }
 }
