@@ -7,7 +7,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
@@ -22,226 +21,228 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ufv.agiotapp.CadastroController">
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ufv.agiotapp.CadastroController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
    <children>
-      <ScrollPane prefHeight="563.0" prefWidth="760.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="557.0" prefWidth="757.0">
+    <AnchorPane VBox.vgrow="NEVER">
+         <children>
+            <GridPane layoutX="92.0" layoutY="65.0" AnchorPane.bottomAnchor="347.0" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="178.0" minWidth="10.0" prefWidth="123.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="285.0" minWidth="10.0" prefWidth="215.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="297.0" minWidth="10.0" prefWidth="284.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="29.0" minHeight="9.0" prefHeight="29.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="33.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="29.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
+              </rowConstraints>
                <children>
-                  <GridPane layoutX="92.0" layoutY="65.0" prefHeight="121.0" prefWidth="641.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="178.0" minWidth="10.0" prefWidth="123.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="285.0" minWidth="10.0" prefWidth="215.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="297.0" minWidth="10.0" prefWidth="284.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="29.0" minHeight="9.0" prefHeight="29.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="33.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="29.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
+                  <Label contentDisplay="CENTER" prefHeight="16.0" prefWidth="175.0" text="Tipo de Conta" textAlignment="CENTER" />
+                  <ChoiceBox id="tipoConta" fx:id="boxTipoConta" prefHeight="24.0" prefWidth="222.0" GridPane.columnIndex="1" />
+                  <Label text="Nome" GridPane.rowIndex="2" />
+                  <Label text="CPF" GridPane.rowIndex="1" />
+                  <Label text="Senha" GridPane.rowIndex="3" />
+                  <Label fx:id="statusCPF" alignment="CENTER" contentDisplay="CENTER" onKeyTyped="#verificarCadastro" prefHeight="16.0" prefWidth="289.0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="cpfField" onKeyTyped="#verificarCadastro" promptText="12345678900" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <TextField fx:id="nomeField" prefHeight="24.0" prefWidth="209.0" promptText="Nome" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <PasswordField fx:id="senhaField" promptText="*********" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </PasswordField>
+                  <Label fx:id="statusNome" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="293.0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Label fx:id="statusSenha" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="291.0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+               </children>
+            </GridPane>
+            <StackPane fx:id="stackPane" layoutX="92.0" layoutY="194.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="131.0" AnchorPane.topAnchor="194.0">
+               <children>
+                  <VBox fx:id="vBoxAgiota" prefHeight="181.0" prefWidth="491.0" visible="false">
                      <children>
-                        <Label contentDisplay="CENTER" prefHeight="16.0" prefWidth="175.0" text="Tipo de Conta" textAlignment="CENTER" />
-                        <ChoiceBox id="tipoConta" fx:id="boxTipoConta" prefHeight="24.0" prefWidth="222.0" GridPane.columnIndex="1" />
-                        <Label text="Nome" GridPane.rowIndex="2" />
-                        <Label text="CPF" GridPane.rowIndex="1" />
-                        <Label text="Senha" GridPane.rowIndex="3" />
-                        <Label fx:id="statusCPF" alignment="CENTER" contentDisplay="CENTER" onKeyTyped="#verificarCadastro" prefHeight="16.0" prefWidth="289.0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <TextField fx:id="cpfField" onKeyTyped="#verificarCadastro" promptText="12345678900" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <cursor>
-                              <Cursor fx:constant="TEXT" />
-                           </cursor></TextField>
-                        <TextField fx:id="nomeField" prefHeight="24.0" prefWidth="209.0" promptText="Nome" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <cursor>
-                              <Cursor fx:constant="TEXT" />
-                           </cursor></TextField>
-                        <PasswordField fx:id="senhaField" promptText="*********" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                           <cursor>
-                              <Cursor fx:constant="TEXT" />
-                           </cursor></PasswordField>
-                        <Label fx:id="statusNome" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="293.0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <Label fx:id="statusSenha" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="291.0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                     </children>
-                  </GridPane>
-                  <StackPane fx:id="stackPane" layoutX="92.0" layoutY="194.0" prefHeight="290.0" prefWidth="491.0">
-                     <children>
-                        <VBox fx:id="vBoxAgiota" prefHeight="282.0" prefWidth="491.0" visible="false">
+                        <GridPane prefHeight="210.0" prefWidth="491.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" prefWidth="130.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="237.0" minWidth="10.0" prefWidth="220.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="154.0" minWidth="10.0" prefWidth="139.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="83.0" minHeight="0.0" prefHeight="82.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="178.0" minHeight="0.0" prefHeight="33.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="67.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="67.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
                            <children>
-                              <GridPane prefHeight="210.0" prefWidth="491.0">
+                              <Label text="Descriçao do Perfil:" />
+                              <TextArea fx:id="descricaoArea" prefHeight="200.0" prefWidth="200.0" promptText="Digite uma descrição para o seu perfil" GridPane.columnIndex="1" />
+                              <Label text="Saldo Disponível:" GridPane.rowIndex="1" />
+                              <TextField fx:id="saldoContaField" promptText="2500" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label text="Aceita Parcelado" GridPane.rowIndex="3" />
+                              <Label text="Juros ao Mês:" GridPane.rowIndex="2" />
+                              <TextField fx:id="jurosField" promptText="5%" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
                                 <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" prefWidth="130.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="237.0" minWidth="10.0" prefWidth="220.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="154.0" minWidth="10.0" prefWidth="139.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints maxHeight="83.0" minHeight="0.0" prefHeight="82.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="178.0" minHeight="0.0" prefHeight="33.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="67.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="67.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <Label text="Descriçao do Perfil:" />
-                                    <TextArea fx:id="descricaoArea" prefHeight="200.0" prefWidth="200.0" promptText="Digite uma descrição para o seu perfil" GridPane.columnIndex="1" />
-                                    <Label text="Saldo Disponível:" GridPane.rowIndex="1" />
-                                    <TextField fx:id="saldoContaField" promptText="2500" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Label text="Aceita Parcelado" GridPane.rowIndex="3" />
-                                    <Label text="Juros ao Mês:" GridPane.rowIndex="2" />
-                                    <TextField fx:id="jurosField" promptText="5%" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                      <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                      </rowConstraints>
-                                       <children>
-                                          <RadioButton fx:id="parceladoNao" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="13.0" prefWidth="105.0" text="Não" GridPane.rowIndex="1">
-                                             <toggleGroup>
-                                                <ToggleGroup fx:id="Parcelado" />
-                                             </toggleGroup>
-                                          </RadioButton>
-                                          <RadioButton fx:id="parceladoSim" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="44.0" prefWidth="105.0" selected="true" text="Sim" toggleGroup="$Parcelado" />
-                                       </children>
-                                    </GridPane>
-                                    <Label fx:id="statusDescricao" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="291.0" textAlignment="CENTER" GridPane.columnIndex="2" />
-                                    <Label fx:id="statusSaldo" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="291.0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                    <Label fx:id="statusJuros" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="291.0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                 </children>
-                              </GridPane>
-                              <VBox fx:id="boxParcelado" prefHeight="36.0" prefWidth="491.0">
-                                 <children>
-                                    <GridPane prefHeight="28.0" prefWidth="491.0">
-                                      <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="245.0" minWidth="10.0" prefWidth="240.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.0" minWidth="10.0" prefWidth="94.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="157.0" minWidth="10.0" prefWidth="135.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                      </rowConstraints>
-                                       <children>
-                                          <Label text="Quantidade Máxima de Parcelas:" />
-                                          <TextField fx:id="maxParcelasField" prefHeight="24.0" prefWidth="115.0" promptText="3" GridPane.columnIndex="1" />
-                                          <Label fx:id="statusMaxParcelas" alignment="CENTER" contentDisplay="CENTER" prefWidth="291.0" textAlignment="CENTER" GridPane.columnIndex="2" />
-                                       </children>
-                                    </GridPane>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </VBox>
-                        <VBox fx:id="vBoxCliente" prefHeight="181.0" prefWidth="491.0">
-                           <children>
-                              <GridPane prefHeight="120.0" prefWidth="484.0">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="240.0" minWidth="10.0" prefWidth="130.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="352.0" minWidth="10.0" prefWidth="222.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="352.0" minWidth="10.0" prefWidth="139.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                 </columnConstraints>
                                 <rowConstraints>
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Label text="Endereço:" />
-                                    <Label text="Telefone:" GridPane.rowIndex="1" />
-                                    <Label text="Adicionar Parente:" GridPane.rowIndex="2" />
-                                    <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                      <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                      </rowConstraints>
-                                       <children>
-                                          <RadioButton fx:id="parenteSim" mnemonicParsing="false" selected="true" text="Sim">
-                                             <toggleGroup>
-                                                <ToggleGroup fx:id="Parente" />
-                                             </toggleGroup></RadioButton>
-                                          <RadioButton fx:id="parenteNao" mnemonicParsing="false" text="Não" toggleGroup="$Parente" GridPane.rowIndex="1" />
-                                       </children>
-                                    </GridPane>
-                                    <TextArea fx:id="enderecoArea" prefHeight="29.0" prefWidth="222.0" GridPane.columnIndex="1" />
-                                    <TextField fx:id="telefoneField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Label fx:id="statusEndereco" alignment="CENTER" contentDisplay="CENTER" prefWidth="291.0" textAlignment="CENTER" GridPane.columnIndex="2" />
-                                    <Label fx:id="statusTelefone" alignment="CENTER" contentDisplay="CENTER" prefWidth="291.0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                    <RadioButton fx:id="parceladoNao" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="13.0" prefWidth="105.0" text="Não" GridPane.rowIndex="1">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="Parcelado" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="parceladoSim" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="44.0" prefWidth="105.0" selected="true" text="Sim" toggleGroup="$Parcelado" />
                                  </children>
                               </GridPane>
-                              <VBox fx:id="boxParentes" prefHeight="167.0" prefWidth="511.0">
+                              <Label fx:id="statusDescricao" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="291.0" textAlignment="CENTER" GridPane.columnIndex="2" />
+                              <Label fx:id="statusSaldo" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="291.0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Label fx:id="statusJuros" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="291.0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                           </children>
+                        </GridPane>
+                        <VBox fx:id="boxParcelado" prefHeight="36.0" prefWidth="491.0">
+                           <children>
+                              <GridPane prefHeight="28.0" prefWidth="491.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="245.0" minWidth="10.0" prefWidth="240.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.0" minWidth="10.0" prefWidth="94.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="157.0" minWidth="10.0" prefWidth="135.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
                                  <children>
-                                    <GridPane prefHeight="134.0" prefWidth="425.0">
-                                      <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.0" minWidth="10.0" prefWidth="136.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="376.0" minWidth="10.0" prefWidth="219.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="376.0" minWidth="10.0" prefWidth="141.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
-                                      </rowConstraints>
+                                    <Label text="Quantidade Máxima de Parcelas:" />
+                                    <TextField fx:id="maxParcelasField" prefHeight="24.0" prefWidth="115.0" promptText="3" GridPane.columnIndex="1" />
+                                    <Label fx:id="statusMaxParcelas" alignment="CENTER" contentDisplay="CENTER" prefWidth="291.0" textAlignment="CENTER" GridPane.columnIndex="2" />
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <VBox fx:id="vBoxCliente" prefHeight="181.0" prefWidth="491.0">
+                     <children>
+                        <GridPane prefHeight="120.0" prefWidth="484.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="240.0" minWidth="10.0" prefWidth="130.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="352.0" minWidth="10.0" prefWidth="222.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="352.0" minWidth="10.0" prefWidth="139.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Endereço:" />
+                              <Label text="Telefone:" GridPane.rowIndex="1" />
+                              <Label text="Adicionar Parente:" GridPane.rowIndex="2" />
+                              <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <RadioButton fx:id="parenteSim" mnemonicParsing="false" selected="true" text="Sim">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="Parente" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="parenteNao" mnemonicParsing="false" text="Não" toggleGroup="$Parente" GridPane.rowIndex="1" />
+                                 </children>
+                              </GridPane>
+                              <TextArea fx:id="enderecoArea" GridPane.columnIndex="1" />
+                              <TextField fx:id="telefoneField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label fx:id="statusEndereco" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER" GridPane.columnIndex="2" />
+                              <Label fx:id="statusTelefone" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                        <VBox fx:id="boxParentes" prefHeight="167.0" prefWidth="511.0" VBox.vgrow="NEVER">
+                           <children>
+                              <GridPane prefHeight="134.0" prefWidth="425.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.0" minWidth="10.0" prefWidth="136.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="376.0" minWidth="10.0" prefWidth="219.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="376.0" minWidth="10.0" prefWidth="141.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label text="Endereço" GridPane.rowIndex="1" />
+                                    <Label text="Telefone" GridPane.rowIndex="2" />
+                                    <Label text="Parentesco" GridPane.rowIndex="3" />
+                                    <Label text="Nome" />
+                                    <TextField fx:id="nomeParenteField" GridPane.columnIndex="1" />
+                                    <TextArea fx:id="enderecoParenteArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <TextField fx:id="telefoneParenteField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <TextField fx:id="parentescoField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Label fx:id="parentesLabel" alignment="CENTER" prefHeight="16.0" prefWidth="139.0" text="Parentes: 0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="291.0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                 </children>
+                              </GridPane>
+                              <VBox prefHeight="35.0" prefWidth="491.0" VBox.vgrow="NEVER">
+                                 <children>
+                                    <AnchorPane prefHeight="16.0" prefWidth="491.0">
                                        <children>
-                                          <Label text="Endereço" GridPane.rowIndex="1" />
-                                          <Label text="Telefone" GridPane.rowIndex="2" />
-                                          <Label text="Parentesco" GridPane.rowIndex="3" />
-                                          <Label text="Nome" />
-                                          <TextField fx:id="nomeParenteField" GridPane.columnIndex="1" />
-                                          <TextField fx:id="telefoneParenteField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <TextArea fx:id="enderecoParenteArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <TextField fx:id="parentescoField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                          <Label fx:id="parentesLabel" alignment="CENTER" prefHeight="16.0" prefWidth="139.0" text="Parentes: 0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                          <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="291.0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                          <Button layoutX="179.0" layoutY="6.0" maxHeight="24.0" maxWidth="134.0" mnemonicParsing="false" onAction="#adicionarParente" text="Adicionar Parente">
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </Button>
                                        </children>
-                                    </GridPane>
-                                    <VBox prefHeight="35.0" prefWidth="491.0">
-                                       <children>
-                                          <AnchorPane prefHeight="16.0" prefWidth="491.0">
-                                             <children>
-                                                <Button layoutX="179.0" layoutY="6.0" mnemonicParsing="false" onAction="#adicionarParente" prefWidth="134.0" text="Adicionar Parente">
-                                                   <cursor>
-                                                      <Cursor fx:constant="HAND" />
-                                                   </cursor></Button>
-                                             </children>
-                                          </AnchorPane>
-                                       </children>
-                                    </VBox>
+                                    </AnchorPane>
                                  </children>
                               </VBox>
                            </children>
                         </VBox>
                      </children>
-                  </StackPane>
-                  <Button layoutX="307.0" layoutY="497.0" mnemonicParsing="false" onAction="#realizarCadastro" prefHeight="24.0" prefWidth="141.0" text="Cadastrar">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor></Button>
-                  <Text layoutX="182.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AgiotApp Cadastro">
-                     <font>
-                        <Font size="42.0" />
-                     </font>
-                  </Text>
-                  <ImageView fitHeight="73.0" fitWidth="102.0" layoutX="74.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@AgiotAppIconNoBG.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="27.0" fitWidth="25.0" layoutX="14.0" layoutY="15.0" onMouseClicked="#voltarTelaLogin" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@botao-voltar.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </ImageView>
+                  </VBox>
                </children>
-            </AnchorPane>
-        </content>
-      </ScrollPane>
+            </StackPane>
+            <Button layoutX="307.0" layoutY="497.0" maxHeight="24.0" maxWidth="83.0" mnemonicParsing="false" onAction="#realizarCadastro" text="Cadastrar">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Text layoutX="182.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AgiotApp Cadastro" AnchorPane.bottomAnchor="469.109375" AnchorPane.leftAnchor="182.0" AnchorPane.rightAnchor="138.5986328125" AnchorPane.topAnchor="3.0146484375">
+               <font>
+                  <Font size="42.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="73.0" fitWidth="102.0" layoutX="74.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="453.4961471557617" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="539.0" AnchorPane.topAnchor="3.0">
+               <image>
+                  <Image url="@AgiotAppIconNoBG.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="27.0" fitWidth="25.0" layoutX="21.0" layoutY="23.0" onMouseClicked="#voltarTelaLogin" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="473.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="669.0" AnchorPane.topAnchor="23.0">
+               <image>
+                  <Image url="@botao-voltar.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </children>
+      </AnchorPane>
    </children>
 </VBox>

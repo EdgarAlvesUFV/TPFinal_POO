@@ -306,37 +306,24 @@ public class BancoDeDados {
         List<Fatura> faturas = new ArrayList<>();
         
         if (faturasSerializadas == null || faturasSerializadas.trim().isEmpty()) {
-            System.out.println("String de faturas vazia ou nula");
             return faturas;
         }
-    
-        System.out.println("String de faturas recebida: " + faturasSerializadas);
     
         String[] faturasArray = faturasSerializadas.split(";");
     
         for (String faturaStr : faturasArray) {
-            System.out.println("Processando fatura: " + faturaStr);
-    
-            // Encontra a parte das parcelas usando colchetes []
             int startParcelas = faturaStr.indexOf("[");
             int endParcelas = faturaStr.indexOf("]");
     
             if (startParcelas == -1 || endParcelas == -1) {
-                System.err.println("Erro: formato de parcelas inválido na fatura - " + faturaStr);
                 continue;
             }
-    
-            // Extrai as parcelas corretamente
             String parcelasStr = faturaStr.substring(startParcelas + 1, endParcelas);
             List<Parcela> parcelas = desserializarParcelas(parcelasStr);
-    
-            // Remove as parcelas da string para evitar divisão errada
             String restante = faturaStr.substring(0, startParcelas) + faturaStr.substring(endParcelas + 2);
-    
             String[] atributos = restante.split(":");
     
             if (atributos.length < 6) {
-                System.err.println("Erro: número insuficiente de atributos na fatura - " + faturaStr);
                 continue;
             }
     
@@ -353,10 +340,8 @@ public class BancoDeDados {
                 faturas.add(fatura);
     
             } catch (NumberFormatException e) {
-                System.err.println("Erro ao converter valores numéricos na fatura: " + faturaStr);
                 e.printStackTrace();
             } catch (Exception e) {
-                System.err.println("Erro inesperado ao desserializar fatura: " + faturaStr);
                 e.printStackTrace();
             }
         }
@@ -368,20 +353,15 @@ public class BancoDeDados {
         List<Parcela> parcelas = new ArrayList<>();
     
         if (parcelasSerializadas == null || parcelasSerializadas.trim().isEmpty() || parcelasSerializadas.equals(" ")) {
-            System.out.println("String de parcelas vazia ou nula");
             return parcelas;
         }
     
-        System.out.println("String de parcelas recebida: " + parcelasSerializadas);
-    
         String[] parcelasArray = parcelasSerializadas.split(",");
         for (String parcelaStr : parcelasArray) {
-            System.out.println("Processando parcela: " + parcelaStr);
     
             String[] atributos = parcelaStr.split(":");
     
             if (atributos.length < 4) {
-                System.err.println("Erro: número insuficiente de atributos na parcela - " + parcelaStr);
                 continue;
             }
     
@@ -395,10 +375,8 @@ public class BancoDeDados {
                 parcelas.add(parcela);
     
             } catch (NumberFormatException e) {
-                System.err.println("Erro ao converter valores numéricos na parcela: " + parcelaStr);
                 e.printStackTrace();
             } catch (Exception e) {
-                System.err.println("Erro inesperado ao desserializar parcela: " + parcelaStr);
                 e.printStackTrace();
             }
         }

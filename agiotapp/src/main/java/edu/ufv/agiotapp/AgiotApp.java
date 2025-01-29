@@ -15,7 +15,7 @@ public class AgiotApp extends Application {
     private static Scene scene;
     private ControladorConta controladorContas;
 
-    public void start(Stage stage) throws Exception {
+    public void start(@SuppressWarnings("exports") Stage stage) throws Exception {
         controladorContas = new ControladorConta();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
         Parent root = loader.load();

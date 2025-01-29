@@ -16,11 +16,11 @@
 
 <VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: linear-gradient(from 0% 0% to 100% 0%, blue, red);" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ufv.agiotapp.LoginController">
    <children>
-      <AnchorPane prefHeight="600.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
+      <AnchorPane maxHeight="390.0" maxWidth="320.0" minHeight="390.0" minWidth="320.0" VBox.vgrow="ALWAYS">
          <children>
-            <Pane focusTraversable="true" layoutX="242.0" layoutY="124.0" maxWidth="330.0" minHeight="380.0" minWidth="320.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 4);" AnchorPane.leftAnchor="240.0" AnchorPane.rightAnchor="240.0">
+            <Pane focusTraversable="true" layoutX="242.0" layoutY="124.0" prefHeight="505.0" prefWidth="563.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 4);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <AnchorPane prefHeight="380.0" prefWidth="320.0">
+                  <AnchorPane>
                      <children>
                         <TextField fx:id="userField" layoutX="70.0" layoutY="148.0" promptText="12345678900" style="-fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.bottomAnchor="208.0703125" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="148.0" />
                         <PasswordField fx:id="passwordField" layoutX="84.0" layoutY="229.0" onAction="#handleLoginButton" promptText="*********" style="-fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.bottomAnchor="127.265625" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="229.265625" />
@@ -61,6 +61,9 @@
                </children>
             </Pane>
          </children>
+         <VBox.margin>
+            <Insets bottom="200.0" left="200.0" right="200.0" top="200.0" />
+         </VBox.margin>
       </AnchorPane>
    </children>
    <padding>
